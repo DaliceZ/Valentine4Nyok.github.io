@@ -42,7 +42,17 @@
         .pin-btn:active { background: var(--primary-color); color: white; transform: scale(0.9); }
 
         .polaroid-frame { background: white; padding: 15px 15px 50px 15px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transform: rotate(-2deg); transition: transform 0.3s; margin: 0 auto; max-width: 600px; }
-        .polaroid-img { height: 50vh; min-height: 400px; object-fit: cover; width: 100%; border-radius: 2px; border: 1px solid #eee; background: #000; }
+        .polaroid-img { height: 50vh; min-height: 400px; object-fit: cover; width: 100%; border-radius: 2px; border: 1px solid #eee; background: #700067; }
+        .polaroid-video { 
+            width: 100%; 
+            height: 60vh; /* ความสูงเท่ากัน */ 
+            max-height: 500px; 
+            object-fit: cover; /* บังคับให้เต็มกรอบโดยไม่บี้ */
+            border-radius: 2px; 
+            border: 1px solid #eee; 
+            background: #000; /* พื้นหลังดำตอนโหลด */
+            display: block;
+        }
         .polaroid-caption { font-family: 'Mali', cursive; text-align: center; margin-top: 15px; color: #555; font-size: 1.2rem; }
 
         .quiz-step { display: none; animation: slideIn 0.4s ease-out; }
@@ -95,8 +105,8 @@
         <div class="d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
             <div class="glass-card text-center p-5" style="animation: pop 1.5s ease;">
                 <i class="bi bi-heart-pulse-fill text-danger" style="font-size: 4rem;"></i>
-                <h1 class="display-5 fw-bold mt-2">My Valentine</h1>
-                <p class="lead mb-4 text-muted">เซอร์ไพรส์เล็กๆ สำหรับเธอ</p>
+                <h1 class="display-5 fw-bold mt-2">My Valentine 4U</h1>
+                <p class="lead mb-4 text-muted">เซอร์ไพรส์เล็กๆ ( เล็กจริงๆ ) สำหรับอ้วนนน</p>
                 <button class="btn btn-main btn-lg" onclick="playSound(); goToPage('page-passcode')">
                     แตะเพื่อเริ่ม <i class="bi bi-arrow-right-short"></i>
                 </button>
@@ -107,7 +117,7 @@
     <section id="page-passcode" class="section-page">
         <div class="container h-100 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
             <div class="glass-card text-center" style="max-width: 400px; width: 100%;">
-                <h3 class="mb-4 fw-bold text-secondary">ใส่รหัสวันครบรอบ</h3>
+                <h3 class="mb-4 fw-bold text-secondary">ใส่รหัสวันครบรอบของเรา</h3>
                 <div class="pin-dot-container" id="pinDots">
                     <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
                     <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
@@ -126,19 +136,19 @@
     <section id="page-menu" class="section-page">
         <div class="container">
             <div class="text-center mb-5 glass-card py-3">
-                <h2 class="fw-bold mb-0">Our Journey</h2>
-                <small class="text-muted">รวมเรื่องราวของเรา ❤️</small>
+                <h2 class="fw-bold mb-0"> Infinite Chapters </h2>
+                <small class="text-muted">รวมเรื่องราวของได๊หยก ❤️</small>
             </div>
             <div class="menu-grid">
-                <div class="menu-item" onclick="playSound(); goToPage('page-memory')"><i class="bi bi-images"></i><span>รูปของเรา</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-timer')"><i class="bi bi-hourglass-split"></i><span>เวลาที่คบ</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-letter')"><i class="bi bi-envelope-heart"></i><span>จดหมาย</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-memory')"><i class="bi bi-images"></i><span>รูปภาพทรงจำ</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-timer')"><i class="bi bi-hourglass-split"></i><span>เวลาที่คบกับหยก</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-letter')"><i class="bi bi-envelope-heart"></i><span>จดหมายถึงน้องหยก</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-music')"><i class="bi bi-music-note-beamed"></i><span>เพลง</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-quiz')"><i class="bi bi-patch-question"></i><span>ทายใจ</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-coupon')"><i class="bi bi-ticket-perforated"></i><span>คูปอง</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-reasons')"><i class="bi bi-heart-fill"></i><span>เหตุผลที่รัก</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-date')"><i class="bi bi-calendar-heart"></i><span>เดทถัดไป</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-memories')"><i class="bi bi-journal-bookmark-fill"></i><span>ความทรงจำ</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-quiz')"><i class="bi bi-patch-question"></i><span>ทายใจกันน</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-coupon')"><i class="bi bi-ticket-perforated"></i><span>คูปองฟรี</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-reasons')"><i class="bi bi-heart-fill"></i><span>เหตุผลของพี่ที่รักหยก</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-date')"><i class="bi bi-gift-fill"></i><span>GIFT</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-memories')"><i class="bi bi-journal-bookmark-fill"></i><span>ความทรงจำดีๆ</span></div>
             </div>
         </div>
     </section>
@@ -150,23 +160,819 @@
             </div>
             <div class="polaroid-frame">
                 <div id="memCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner" id="gallery-container">
+                    <div class="carousel-inner">
+
                         <div class="carousel-item active">
-                            <div class="d-flex justify-content-center align-items-center bg-light" style="min-height: 400px; padding: 15px;">
-                                <div class="text-muted">กำลังโหลดภาพความทรงจำ...</div>
-                            </div>
+                            <video controls autoplay="autoplay" class="d-block polaroid-img">
+                                <source src="images/pic0.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption">ทุกอย่างต้องเริ่มด้วยการเป็นแฟนกันอะนะ</div>
+                            <div class="polaroid-caption">มีคนตอบตกลงเป็นแฟนกับพี่ด้วย เย้เย้ (เขินนะเนี่ย)</div>
                         </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic1.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption">คลิปหยกแรกๆในโรบูดด ล่าสุดพี่มีแค่นี้55</div>
+                            <div class="polaroid-caption">ไม่คิดว่าจะได้คุยถึงขั้นนี้ง่ะ ลืมอัดไว้เย้อๆ แง่งง</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic2.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption">ท่า PSYCHO ที่ส่งไปให้หยก ทำให้เรารู้ว่า</div>
+                            <div class="polaroid-caption">เราชอบอะไรเหมือนๆกัน 555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic3.jpg" class="d-block polaroid-img" alt="pic3">
+                            <div class="polaroid-caption">เหมือนวันนั้นไปดูZootopia ละออกมาเจอบูทนี้</div>
+                            <div class="polaroid-caption">เลยส่งให้ดู หลังจากที่เต้นท่า PSYCHO เสด</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic4.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption"> คลิปที่ส่งไปจีบน้องหยกคลิปแรก </div>
+                            <div class="polaroid-caption"> เลยบอกหยกไปว่าติ๋มๆไรงี้ บราๆๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic5.jpg" class="d-block polaroid-img" alt="pic5">
+                            <div class="polaroid-caption">อันนี้เป็นหนังสือที่พี่ซื้อให้ วันนั้นแอบถามว่า</div>
+                            <div class="polaroid-caption"> รู้จักตัวนี้ไหมที่ชื่อ กิกิ อ๋า่ เห็นรู้จัก เลยซื้อไปเร้ย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic6.jpg" class="d-block polaroid-img" alt="pic6">
+                            <div class="polaroid-caption">เป็นรูปแคปโปรไฟล์หยกคั้งแรก</div>
+                            <div class="polaroid-caption">เห็นน่ารักดีนะ ตอนนั้น เลยเริ่มสนใจขึ้นมาแล้ว</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic7.jpg" class="d-block polaroid-img" alt="pic7">
+                            <div class="polaroid-caption">เริ่มรู้จักกันละม้ั้ง เลยส่งคลิปและภาพพระอาทิตย์ขึ้นให้ดู</div>
+                            <div class="polaroid-caption"> น้องหยกก็เหมือนจะเปิดทางให้แล้วสิช่วงนี้ แบร่ๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic8.jpg" class="d-block polaroid-img" alt="pic8">
+                            <div class="polaroid-caption"> รูป ootd วันนั้น ส่งให้หยกดู </div>
+                            <div class="polaroid-caption"> เหมือนหยกจะอวยพี่อยู่น้าา ว่านุ้นนี่นั่น 5564564 </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic9.jpg" class="d-block polaroid-img" alt="pic9">
+                            <div class="polaroid-caption"> คิดว่านี่คือการโทรครั้งแรกของพี่กับหยกนะ </div>
+                            <div class="polaroid-caption"> แบบพี่ถามว่าว่างรึป่าว จะให้ดูน้ำตก หยกบอกได้นะ </div>
+                            <div class="polaroid-caption"> หยกมีใจละม้างงงตอนนี้ ยังกวนๆอยู่นะตอนนั้น แต่น่ารักดี </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic10.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption"> เหมือนจะเป็นการโทรครั้งที่2กับหยก </div>
+                            <div class="polaroid-caption"> แบบอยู่เป็นเพื่อนหน่อยนั่งฟังเพลงคนเดียว (เริ่มส่งซิกว่าไม่ได้มีใคร) </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic11.jpg" class="d-block polaroid-img" alt="pic11">
+                            <div class="polaroid-caption"> เอาละไง จำได้ว่าตอนนั้นฟังๆเพลงอยู่</div>
+                            <div class="polaroid-caption">ฝนตกเส้ยยยย ละพอพี่กลับหอนะ ฝนมันหยุดตก แย่จัด</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic12.jpg" class="d-block polaroid-img" alt="pic12">
+                            <div class="polaroid-caption"> ตอนนั้นเหมือนจะถ่ายหยกในโรบ้อกไว้ </div>
+                            <div class="polaroid-caption"> ว่าไม่เคยเห็นสกินนี้ ฮ่าๆ ที่ไหนได้ สกินโปรดนี่หว่าา </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic13.jpg" class="d-block polaroid-img" alt="pic13">
+                            <div class="polaroid-caption"> ตอนนี้ความสัมพันธ์เริ่มไปอีกขั้นแล้ว </div>
+                            <div class="polaroid-caption"> หยกเอาพี่เข้า close friend ตอนนั้นดีใจมากๆ และงงด้วย ฝันรึปาว</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic14.jpg" class="d-block polaroid-img" alt="pic14">
+                            <div class="polaroid-caption"> เริ่มโทรกันบ่อยขึ้นทุกวันละสิ </div>
+                            <div class="polaroid-caption">แต่ไม่เท่าตอนปัจจุบันนะอ้วนนน<3</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic15.jpg" class="d-block polaroid-img" alt="pic15">
+                            <div class="polaroid-caption"> ช่วงนี้ หยกให้ท้ายสุดๆ อยู่ด้วยตลอด </div>
+                            <div class="polaroid-caption">ตอนในงานอาวีก็เหมือนกัน อยู่ด้วยตลอดงานเลยนะอ้วนน</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic16.jpg" class="d-block polaroid-img" alt="pic16">
+                            <div class="polaroid-caption">ตอนนั้นพี่กดเข้าห้องทัน ดีใจมาก ไมรู้ส่งให้หยกดูด้วยป่าว</div>
+                            <div class="polaroid-caption">ได้เล่นกับพี่ๆนักแข่งและ จลจ น่ะ เย้เย้ ขอบคุณน้องหยก</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic17.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption"> ไม่กี่วันต่อมา พี่ก็ได้เสื้ออาวีมา </div>
+                            <div class="polaroid-caption">เลยใส่ไปถ่ายรูปต้อกแต้กเล่นๆ แต่มีคนชอบจริง ผมอึ่งไข่เลย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic18.jpg" class="d-block polaroid-img" alt="pic18">
+                            <div class="polaroid-caption"> เริ่มได้ต้อกแต้กหยกคนสวยยย ตอนแรกนึกว่าดาวต้อกแต้กนะนิ</div>
+                            <div class="polaroid-caption">คือสวยจนเป็นดาวต้อกแต้กได้เลยอะ พี่ก็เลยฟอลไป แต่นานมาก กว่าจะรับ5555 เข้าใจๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic19.jpg" class="d-block polaroid-img" alt="pic19">
+                            <div class="polaroid-caption"> หยกเอาพี่เข้า close friend อีกครั้ง และส่งคลิปที่น่ารักอีกแล้ว</div>
+                            <div class="polaroid-caption">พี่ชอบนะ เช่นตอนท้ายๆคลิปดูกวนๆดี แบร่ๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic20.jpg" class="d-block polaroid-img" alt="pic20">
+                            <div class="polaroid-caption">ไปไหนไม่รู้</div>
+                            <div class="polaroid-caption">อ่อ ไปดู Avatar เหมือนจะชวนแล้วแต่หยกไม่อยากนั่งนาน3ชม แง่งๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic21.jpg" class="d-block polaroid-img" alt="pic21">
+                            <div class="polaroid-caption"> อันนี้เริ่มส่งช่วงรู้จักกันมากๆแล้ว แปลกใจตั้งแต่หยกส่งที่อยู่มาให้แล้วว บ้ามากก น้องงง </div>
+                            <div class="polaroid-caption">โดนหลอกทำไงน้อ แต่ดีนะเป็นพี่ แฮร่ๆ เลยไปซื้อของให้หยก โดยไปร้อยสายคล้องเป็นชื่อหยก</div>
+                            <div class="polaroid-caption"> (ตลกร้ายนิดนึง คือพี่เอาไปให้พี่ดู มันอ่านกลับหลัง อ่านว่า ZKOY มันอ่านสก๊อยงี้ พี่เกือบทุ้บบบ) </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic22.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption">อันนี้ขี่รถแถวทางกลับจากอาเขต</div>
+                            <div class="polaroid-caption"> สวยดีเลยส่งให้หยกดู หยกบอกวิวหลักล้าน</div>
+                            <div class="polaroid-caption"> โซยูต้องมาดูเองนะคั้บบ แต่ถ้าเห็นข้อความนี้พี่คงพาดูละแหละ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic23.jpg" class="d-block polaroid-img" alt="pic23">
+                            <div class="polaroid-caption"> อันนี้อึ้ง หยกบอกไม่กดไลค์หรอก ไอเราก็อ๋าา ไม่เป็นรายย</div>
+                            <div class="polaroid-caption">หยกดันกด รายการโปรด ขอเป็นบ้าดีกว่า คนอะไรจะน่ารักขนาดนี้ อ้ากกก</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic24.jpg" class="d-block polaroid-img" alt="pic24">
+                            <div class="polaroid-caption"> ชอบดู NOti ที่มีหยกกดไลค์ </div>
+                            <div class="polaroid-caption">ก็ฟืิรอะเนอะ คนสวยมากดให้คนพอกะเทินแบบอ้าย5555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic25.jpg" class="d-block polaroid-img" alt="pic25">
+                            <div class="polaroid-caption"> เริ่มโทรกับหยกบ่อยละสิทีนี้ </div>
+                            <div class="polaroid-caption"> แบบติดโดนของเข้าแล้วไง </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic26.jpg" class="d-block polaroid-img" alt="pic26">
+                            <div class="polaroid-caption"> หยกเริ่มเพ้อลงโน๊ตถึงพี่คั้งแรก ชอบๆๆๆ </div>
+                            <div class="polaroid-caption"> คุณน่ารักมากกเลยนะ อ้วนๆๆๆๆๆๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic27.jpg" class="d-block polaroid-img" alt="pic27">
+                            <div class="polaroid-caption"> อันนี้พี่พูดเลยว่าไม่เคยทำให้ใครขนาดนี้เลย คุณคนแรก </div>
+                            <div class="polaroid-caption">และสมควรได้รับมันอย่างยิ่ง พี่ซื้อๆรวมกันใช้เวลาประมาณ 5-6 วัน นะ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic28.jpg" class="d-block polaroid-img" alt="pic28">
+                            <div class="polaroid-caption"> หยกออกตัวแรงน่ะ ชอบ เลยแคป</div>
+                            <div class="polaroid-caption"> คิดถึงน้าา ไม่เจอก็รักก คิดถึงมากๆๆๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic29.jpg" class="d-block polaroid-img" alt="pic29">
+                            <div class="polaroid-caption"> ซานต้าคนนี้เริ่มส่งของแล้ววสิ้ </div>
+                            <div class="polaroid-caption"> รอรับของน้าาคนดี ห้ามไห้ๆๆๆ งั่มๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic30.jpg" class="d-block polaroid-img" alt="pic30">
+                            <div class="polaroid-caption"> หยกก็อยู่ในทุกงานของพี่เลยย อันนี้ก็เป็นคริสมาส </div>
+                            <div class="polaroid-caption"> อยากไปอยู่กับหยกมากกว่า่แบบทุกเทศกาลเลย แบร่ๆๆๆๆๆๆ  </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic31.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption"> ชอบมากมีคนรีพายว่าชอบเสื้อแดง </div>
+                            <div class="polaroid-caption"> อ้ากกก ผมก็ชอบคุณ คุณหยกก รู้ไว้ด้วยยย แบร่ๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic32.jpg" class="d-block polaroid-img" alt="pic32">
+                            <div class="polaroid-caption"> ลัคกี้เดย์ อาจารย์สุ่มได้ชื่อพี่</div>
+                            <div class="polaroid-caption"> ได้เงิน500 เลยเอาไปทำสิ่งที่ดีต่อหยกต่อ ฮ่าๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic33.jpg" class="d-block polaroid-img" alt="pic33">
+                            <div class="polaroid-caption"> อันนี้พี่ช็อคนะ ทำไมหยกน่ารักขนาดนี้ </div>
+                            <div class="polaroid-caption"> คือปกติลงตอรี่กับคนนี้อยู่แล้ว แต่มาถามพี่ว่าลงได้ไหม น่ารักมากๆ เชื่อเลยล่ะ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic34.jpg" class="d-block polaroid-img" alt="pic34">
+                            <div class="polaroid-caption"> หยกชอบพี่ว่าน่ารัก พี่ก็มองกระจก น่ารักยังไงนะ</div>
+                            <div class="polaroid-caption">ก็สงสัยตัวเองมาตลอด จนหยกบอกว่าพี่ น่ารัก พี่ก็จะเชื่อว่าน่ารักแบบนี้ล่ะ ไม่สนใคร ฮื่อๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic35.jpg" class="d-block polaroid-img" alt="pic35">
+                            <div class="polaroid-caption"> ของขวัญคริสมาสถึงหยกแล้วว</div>
+                            <div class="polaroid-caption"> ดีใจด้วยนน้าาา เย้ มีแต่ของที่พี่ตั้งใจให้ทั้งนั้นนะคั้บบ รักน้าาา</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic36.jpg" class="d-block polaroid-img" alt="pic36">
+                            <div class="polaroid-caption"> ดีใจยัง มีคนลงสตอรี่ถึงด้วยยยย วุุ้วๆๆ</div>
+                            <div class="polaroid-caption">นี่สินะ เลือกคบถูกคน อะไรก็ดีัไปหมด ผมร้ากคูณณ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic37.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption"> อัดคลิปเก็บไว้ดูความทรงจำ น่ารักๆ </div>
+                            <div class="polaroid-caption">หยกหลังได้รับของขวัญจากพี่ได๊</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic38.jpg" class="d-block polaroid-img" alt="pic38">
+                            <div class="polaroid-caption"> อันนี้ก็ช็อคอีก1 </div>
+                            <div class="polaroid-caption"> ไม่เคยมีใครเขียนไรยาวขนาดนี้ให้พี่ ไม่ให้รักได้ไงนิ เห้อๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic39.jpg" class="d-block polaroid-img" alt="pic39">
+                            <div class="polaroid-caption"> อันนี้เอ๋อๆหน่อย แค่อยากส่งไรไปวันคริสมาส5465468 </div>
+                            <div class="polaroid-caption"> ให้รู้ว่าคุณเป็นคนพิเศษสำคัญนะอ้วนน </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic40.jpg" class="d-block polaroid-img" alt="pic40">
+                            <div class="polaroid-caption"> หยกส่งรูปในหนังสือมาอวด</div>
+                            <div class="polaroid-caption"> ดีใจม้ายยยย ไม่รู้ว่าชอบอ่านสือป่าว แต่อยากให้น่ะ อิอิ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic41.jpg" class="d-block polaroid-img" alt="pic41">
+                            <div class="polaroid-caption"> หยกมาอวดพี่ด้วยย ว่าเคยวาดรูปไว้อยู่ </div>
+                            <div class="polaroid-caption"> ซึ่งมันน่ารักมาก เท่มากกกเลยยย ชอบๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic42.jpg" class="d-block polaroid-img" alt="pic42">
+                            <div class="polaroid-caption"> นี่ก็อีกอัน ชอบมากๆๆ</div>
+                            <div class="polaroid-caption"> คนอะไร สวยก็สวย น่ารักอีก แถมเก่งด้วยย ชอบเลยยย </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic43.jpg" class="d-block polaroid-img" alt="pic43">
+                            <div class="polaroid-caption"> โน๊ตพี่ที่เก็บที่อยากเกี่ยวกับหยกไว้ </div>
+                            <div class="polaroid-caption"> คนสำคัญของพี่ ต้องมีไรพิเศษๆหน่อย แบร่ๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic44.jpg" class="d-block polaroid-img" alt="pic44">
+                            <div class="polaroid-caption"> หยกส่งรูปคนสวยมาจีบพี่รึป่าว</div>
+                            <div class="polaroid-caption">คือพี่หลงเลยอะ ชอบๆๆๆ เห้อ ชอบๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic45.jpg" class="d-block polaroid-img" alt="pic45">
+                            <div class="polaroid-caption"> คุณบอกว่าคุณติดผม </div>
+                            <div class="polaroid-caption">คือผมต่างหากที่ติดคุณหัวปักหัวปลำ อยู่กับพี่ไปนานๆน้าาอ้วนน</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic46.jpg" class="d-block polaroid-img" alt="pic46">
+                            <div class="polaroid-caption">ชอบเหมือนกันนะหยกกกกกกกกก</div>
+                            <div class="polaroid-caption">ช้อบๆๆ มาถึงตอนนี้คงเบื่อละสิ บอกแต่ชอบบอกแต่รัก55555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic47.jpg" class="d-block polaroid-img" alt="pic47">
+                            <div class="polaroid-caption"> หยกรอเพื่อนที่ MBA </div>
+                            <div class="polaroid-caption"> ก็มาคอลกับพี่ได้น้ออออ เก่งแท้ล่ะ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic48.jpg" class="d-block polaroid-img" alt="pic48">
+                            <div class="polaroid-caption"> ถ่ายรูปคู่ของขวัญที่ให้กันและกัน</div>
+                            <div class="polaroid-caption"> ดูอบอุ่นเนาะ ไว้เก็บให้ลูกดู แม่สวยแค่ไหน ฮื่อๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic49.jpg" class="d-block polaroid-img" alt="pic49">
+                            <div class="polaroid-caption">ของขวัญจากคนคุยตอนนั้น</div>
+                            <div class="polaroid-caption">น้องสตีฟฟฟฟฟฟฟฟ มีความเขียนผิด เลยเอามาตั้งชื่อซะเลย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic50.jpg" class="d-block polaroid-img" alt="pic50">
+                            <div class="polaroid-caption"> หยกกดไลค์พี่</div>
+                            <div class="polaroid-caption"> พี่ชอบมาก Noti แบบนี้ ชื่นใจมากดบ่อยๆน้าาา แฮร่</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic51.jpg" class="d-block polaroid-img" alt="pic51">
+                            <div class="polaroid-caption"> หยกแชร์ตารางเรียนมาให้ </div>
+                            <div class="polaroid-caption"> แสนดีไรขนาดนี้ เห็นบอกชอบ privacy แต่ยกเว้นพี่เนอะ55</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic52.jpg" class="d-block polaroid-img" alt="pic52">
+                            <div class="polaroid-caption"> เอาน้อนสตีฟฟ ไปห้อยซะหน่อย</div>
+                            <div class="polaroid-caption">มาทำงานแทนน้องแคร์แบร์น้ำเงิน นอนยาวเลยตอนนี้</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic53.jpg" class="d-block polaroid-img" alt="pic53">
+                            <div class="polaroid-caption"> หยกใส่เขากวางไปพรีเซนต์งานนี่ </div>
+                            <div class="polaroid-caption"> เพื่อนชมด้วยนิว่าน่า่รัีกอะเนอะ พี่ก็ว่างั้นล่ะ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic54.jpg" class="d-block polaroid-img" alt="pic54">
+                            <div class="polaroid-caption"> ครั้งแรกเลยที่ แท็กหยกแบบไม่บอกดวยนะ</div>
+                            <div class="polaroid-caption">Lo Siento น้าา ว่าแต่จะแท็กได้มั้ยน้าาต่อไปนี้ แฮร่</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic55.jpg" class="d-block polaroid-img" alt="pic55">
+                            <div class="polaroid-caption"> ไปงานคริสมาสกับเพื่อน ละส่งรูปนี้ไป</div>
+                            <div class="polaroid-caption"> หยกบอก อ้าว หลบมุมละหรอ65555 กลัวๆสังคมๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic56.jpg" class="d-block polaroid-img" alt="pic56">
+                            <div class="polaroid-caption"> เพื่อนถ่ายในกล้องดิจิทัล</div>
+                            <div class="polaroid-caption"> เห็นหยกชอบ พี่ก็ดีใจมากกก ยิ้มแก้มปริเลย อิ่มสุขอิ่มใจ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic57.jpg" class="d-block polaroid-img" alt="pic57">
+                            <div class="polaroid-caption">หยกบอก ได๊จิ๋ว</div>
+                            <div class="polaroid-caption">ชอบนะ ดูมุ้จุ้ แบบที่หยกบอก555555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic58.jpg" class="d-block polaroid-img" alt="pic58">
+                            <div class="polaroid-caption"> พี่ชอบการแจ้งเตือนนี้สุดๆล้าา</div>
+                            <div class="polaroid-caption"> แฟนโทรมาน่ะ แบร่ๆๆๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic59.jpg" class="d-block polaroid-img" alt="pic59">
+                            <div class="polaroid-caption"> หยกเครียด ขอบคุณน้าที่ส่งรูปมาให้ชม</div>
+                            <div class="polaroid-caption">แบ่งปันความน่ารัก ยิ้มๆๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic60.jpg" class="d-block polaroid-img" alt="pic60">
+                            <div class="polaroid-caption"> แอบแคปหยกสะพายกระเป๋าาน่อยๆ</div>
+                            <div class="polaroid-caption"> คือดูจากตรงนี้รู้ๆหน่าอยละว่าหยกตัวเล็กน่ะ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic61.jpg" class="d-block polaroid-img" alt="pic61">
+                            <div class="polaroid-caption"> อ้าว ใส่โปรใหม่ น่ารักนะเนี่ยย</div>
+                            <div class="polaroid-caption">เลยแคปไว้ มันสำคัญต่อชีวิตผมมากกกก </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic62.jpg" class="d-block polaroid-img" alt="pic62">
+                            <div class="polaroid-caption"> หยกบอกมีรูปที่ถ่ายกับสตีฟไว้</div>
+                            <div class="polaroid-caption"> เป็นรูปที่ทรงคุณค่า น่ารักจริงๆ ขอยกขึ้นหิ้ง</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic63.jpg" class="d-block polaroid-img" alt="pic63">
+                            <div class="polaroid-caption"> เอาตั๋วหนังฟรีให้หยกดู Zootopia</div>
+                            <div class="polaroid-caption"> น้องหยกดูชอบนะครับทุกคน พี่ก็ดีใจๆๆๆๆ แต่อยากไปดูด้วยมากกว่า</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic64.jpg" class="d-block polaroid-img" alt="pic64">
+                            <div class="polaroid-caption"> ส่งของให่ทางงบ้านหยกก ทำคะแนน</div>
+                            <div class="polaroid-caption"> เผื่อทางบ้านจะได้ชอบพี่ไวขึ้น แบร่ๆ ไม่รู้นะๆตอนนี้เป็นไง555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic65.jpg" class="d-block polaroid-img" alt="pic65">
+                            <div class="polaroid-caption">อันนี้เพื่่อนที่มาส่งพี่มาส่งของน่ะ</div>
+                            <div class="polaroid-caption">เพื่อนสมัยเก่าละ นานมาก เลยส่งมารายงานคนดีของพี่</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic66.jpg" class="d-block polaroid-img" alt="pic66">
+                            <div class="polaroid-caption"> หยกปักปิ่นให้ดู</div>
+                            <div class="polaroid-caption">พร้อมเป็นสาวเหนือละอะดิ้เราาาาา </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic67.jpg" class="d-block polaroid-img" alt="pic67">
+                            <div class="polaroid-caption"> เอ้อ ก็นอนโชว์ไปเลยยยย</div>
+                            <div class="polaroid-caption"> นอนกอดน้องชานีนนนนน </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic68.jpg" class="d-block polaroid-img" alt="pic68">
+                            <div class="polaroid-caption"> หยกส่งรูปชี้มา</div>
+                            <div class="polaroid-caption">วันนั้นคึกเลยไปถ่ายรูปหน้ากระจกส่งให้55555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic69.jpg" class="d-block polaroid-img" alt="pic69">
+                            <div class="polaroid-caption">ข้อความที่หยกถนัด ชอบมากกกก บอกความในใจกับคนในโรบ้อกๆ</div>
+                            <div class="polaroid-caption">ระวังน้าๆๆๆๆ แบร่</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic70.jpg" class="d-block polaroid-img" alt="pic70">
+                            <div class="polaroid-caption">อะยังไม่จบ พี่ขอขอบคุณหยกมากๆน้าา </div>
+                            <div class="polaroid-caption">ที่ทำให้่พี่รู้ว่าหยกรักพี่ขนาดไหน ฮืออ ไหนบอกรักให้ฟังหน่อย </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic71.jpg" class="d-block polaroid-img" alt="pic71">
+                            <div class="polaroid-caption"> ตอนนี้หยกกลับอุดรแย้วว</div>
+                            <div class="polaroid-caption"> ทัวบ้านหยก มีรูปหยกน้อยด้วยยย เจ๋งแจ๋วว</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic72.jpg" class="d-block polaroid-img" alt="pic72">
+                            <div class="polaroid-caption"> ส่วนนี้คือหยกโต</div>
+                            <div class="polaroid-caption">ขอบคุณที่เกิดมานะอ้วน อ้ากกก แฟนที่ดีก็หยกไง</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic73.jpg" class="d-block polaroid-img" alt="pic73">
+                            <div class="polaroid-caption"> ได้ไลน์หยกมาน่ะ</div>
+                            <div class="polaroid-caption">เลยใส่ไปเลยรายการโปรด แต่โปรไฟล์สวยนะอันนี้ แบร่</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic74.jpg" class="d-block polaroid-img" alt="pic74">
+                            <div class="polaroid-caption"> อันนี้เริ่มอยากอวดประชาชนละ</div>
+                            <div class="polaroid-caption"> ดีใจนะ ชอบด้วยที่มีคนอวดแฟน คนรัก ดูสำคัญดีแหะๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic75.jpg" class="d-block polaroid-img" alt="pic75">
+                            <div class="polaroid-caption"> บอกเพื่อนให้เลยยย</div>
+                            <div class="polaroid-caption"> ไม่ทำให้ผิดหวังแน่นอนนน ได้คนที่เพอร์เฟคแบบนี้ พี่จะดีให้มากๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic76.jpg" class="d-block polaroid-img" alt="pic76">
+                            <div class="polaroid-caption">หยกไปเที่ยกับเพื่อนอุดร แวะถ่ายรูปมาด้วย</div>
+                            <div class="polaroid-caption">น่ารักคักแท้ เอื้อกกกกก</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic77.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption"> ไปกินข้าวกับเพื่อน "เนย"</div>
+                            <div class="polaroid-caption">บอกหยกเพื่อนความสบายใจ มันชวนหลังลเ่นนวาโลเสด</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic78.jpg" class="d-block polaroid-img" alt="pic78">
+                            <div class="polaroid-caption">หยกphoto boothน่ารักมาก</div>
+                            <div class="polaroid-caption">เห้นเอาไปตั้งปกด้วยนิ สงสัยจะชอบตัวเองรูปนี้</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic79.jpg" class="d-block polaroid-img" alt="pic79">
+                            <div class="polaroid-caption"> หยกเอาของส่งให้ที่บ้านแล้ว</div>
+                            <div class="polaroid-caption">ที่บ้านน่ารักมาก ส่งรูปมาห้ดูด้วย งั่มม</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <video controls autoplay class="d-block polaroid-video">
+                                <source src="images/pic80.mp4" type="video/mp4">
+                                Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                            </video>
+                            <div class="polaroid-caption"> หยกทำงานนนนน ทรงงานหนักมากคนนี้</div>
+                            <div class="polaroid-caption">อัดคลิป ร้านคาราโอเกะ เท่มากกก </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic81.jpg" class="d-block polaroid-img" alt="pic81">
+                            <div class="polaroid-caption"> หยกวัยละอ่อน เหมือนวันนี้จะเป็นวันเด็กนะ</div>
+                            <div class="polaroid-caption"> เด็กๆก็น่ารัก โตมาเทสเลยล่ะ โตมาชิกูรู</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic82.jpg" class="d-block polaroid-img" alt="pic82">
+                            <div class="polaroid-caption">อีกรูปนะเนี่ยยย</div>
+                            <div class="polaroid-caption">รอบนี้มาหลายคนนน น่ารักจังงง</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic83.jpg" class="d-block polaroid-img" alt="pic83">
+                            <div class="polaroid-caption"> หยกเฟรชชี่ตัวเล็กมั้กๆๆ </div>
+                            <div class="polaroid-caption"> ถุงเท้าติดกระเป๋าเสื้อ เอิ่มๆๆ เด็กน้อยเอ้ยยย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic84.jpg" class="d-block polaroid-img" alt="pic84">
+                            <div class="polaroid-caption">หยกอยู่ห้องก็ถ่ายสวยยย</div>
+                            <div class="polaroid-caption">ตัวตึงห้องน้ำ หยกปีศาจอุดร</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic85.jpg" class="d-block polaroid-img" alt="pic85">
+                            <div class="polaroid-caption"> คือหยกบอกว่าชอบรูปนี้</div>
+                            <div class="polaroid-caption"> ซึ่งเป็นรูปที่พี่ไม่มั่้นใจสุดละเพราะมันโชว์หน้าเยอะ ฮือ น่ารักจังงง</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic86.jpg" class="d-block polaroid-img" alt="pic86">
+                            <div class="polaroid-caption">หยกไปเรียนแอบปิดปากกก</div>
+                            <div class="polaroid-caption"> ส่งให้ดูอีกแล้วว น่ารักขนาดดด</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic87.jpg" class="d-block polaroid-img" alt="pic87">
+                            <div class="polaroid-caption"> อันนี้ดอกไม้ที่สั่งจากพี่คณะ</div>
+                            <div class="polaroid-caption"> เอาไปมอบให้คุณหยกที่ขอนแก่นนงายย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic88.jpg" class="d-block polaroid-img" alt="pic88">
+                            <div class="polaroid-caption"> ก่อนเจอกันไม่กี่วัน</div>
+                            <div class="polaroid-caption"> สวยขนาดนี้ อดใจเจอไม่ไหวแล้ววว</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic89.jpg" class="d-block polaroid-img" alt="pic89">
+                            <div class="polaroid-caption"> เห็นในต้อกแต้กว่ามีร้านรับวาดรูปเหมือนอยู่</div>
+                            <div class="polaroid-caption">เลยไปให้เขาวาด แล้วก็ยกให้คุณหยกเก็บไว้ เอาไปใส่กรอบด้วยก็ดีนะ เดะออกให้</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic90.jpg" class="d-block polaroid-img" alt="pic90">
+                            <div class="polaroid-caption">ภาพเดอะเบสของพี่</div>
+                            <div class="polaroid-caption">ปากแบบนี้ ลิ้นแบบนี้ ตาแบบนี้ แก้มแบบนี้ หลงๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic91.jpg" class="d-block polaroid-img" alt="pic91">
+                            <div class="polaroid-caption"> เอาล่ะสิ เริ่มเดินทางละ </div>
+                            <div class="polaroid-caption">พี่เรียกเพื่อนมาส่งตอน6มง โทรไป20กว่าสายกว่าจะตื่น</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic92.jpg" class="d-block polaroid-img" alt="pic92">
+                            <div class="polaroid-caption"> เย้ ตื่นเต้นนนน จะได้เจอกันแย้ววว</div>
+                            <div class="polaroid-caption">นัดเจอเพื่อนในโรบ้อกกกครั้งแรกกก บินเครื่องบินไฟล์ทเช้ามากก</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic93.jpg" class="d-block polaroid-img" alt="pic93">
+                            <div class="polaroid-caption">เจอหยกแล้วววววววววววว</div>
+                            <div class="polaroid-caption">ตัวจริงน่ารักมาก ดูดี ตัวเล็กกว่าที่คิด ชอบนะ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic94.jpg" class="d-block polaroid-img" alt="pic94">
+                            <div class="polaroid-caption">เป็นรูปคู๋รูปแรกของเราเลยยย น่ารักจังงง</div>
+                            <div class="polaroid-caption">แวะเอาพี่มากักตัวในห้องงง เดียววก็ได้เจอกันอีกก</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic95.jpg" class="d-block polaroid-img" alt="pic95">
+                            <div class="polaroid-caption">และหยกก็ฝากไอตัวนี้ไว้</div>
+                            <div class="polaroid-caption">บอกด้วยนะว่ามันแพง ดูแลดีๆ (ได้เลยค้าบบ)</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic96.jpg" class="d-block polaroid-img" alt="pic96">
+                            <div class="polaroid-caption">เดทแรกของเราาาา กินข้าวอร่อยขึ้น200%</div>
+                            <div class="polaroid-caption">เป็นคนที่อยู่ด้วยแล้ว พลังบวกสุดๆๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic97.jpg" class="d-block polaroid-img" alt="pic97">
+                            <div class="polaroid-caption">กินเสร็จ เด็กน้อยคนนี้บอกว่า</div>
+                            <div class="polaroid-caption">อยากกศื้ออะไรให้ เลยเดินตามไปซะหน่อยย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic98.jpg" class="d-block polaroid-img" alt="pic98">
+                            <div class="polaroid-caption">ถึงห้องแล้ววววว มาพักผ่อน กอดๆ</div>
+                            <div class="polaroid-caption">น่ารักสุดๆ พอมองใกล้ๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic99.jpg" class="d-block polaroid-img" alt="pic99">
+                            <div class="polaroid-caption">พากันเดินตลาด และมานั่งแบบสตรีทฟุ้ดดด </div>
+                            <div class="polaroid-caption">เท่มากก ก่อนจะถามเริ่มของเรา แบร่</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic100.jpg" class="d-block polaroid-img" alt="pic100">
+                            <div class="polaroid-caption"> เดินตลาดก็แวะถ่ายรูปซะหน่อยย</div>
+                            <div class="polaroid-caption"> มาเดินกับแฟนทั้งที เห็นคนเดินกับแฟนเยอะเลย แต่ตอนนี้มีให้เดินละนะ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic101.jpg" class="d-block polaroid-img" alt="pic101">
+                            <div class="polaroid-caption">ชอบให้หยกซ้อนพี่นะ เหมือนให้พี่ดูแล My Princess</div>
+                            <div class="polaroid-caption">อยากพาไปถึงเป้าหมาย ในทุกๆเรื่องด้วย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic102.jpg" class="d-block polaroid-img" alt="pic102">
+                            <div class="polaroid-caption">แฟนพามาตลาดต้นตาล มูดดีๆๆ</div>
+                            <div class="polaroid-caption">ฟีลแม่พาลูกมากินข้าวว หยกดูแลดีเกิ้นนน </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic103.jpg" class="d-block polaroid-img" alt="pic103">
+                            <div class="polaroid-caption"> อีกวันก็มาดูหนังกัน Eternity </div>
+                            <div class="polaroid-caption">เหมือนเด็กมาดูหนังอ้ะ 445545 หนังดีๆๆๆๆๆ </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic104.jpg" class="d-block polaroid-img" alt="pic104">
+                            <div class="polaroid-caption">ห้ามถ่ายรูปในโรงหนังนะ</div>
+                            <div class="polaroid-caption">เอาจริงๆนะ ที่พี่ทำอันนี้ก็เหมือน Archive ในเรื่องอะ555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic105.jpg" class="d-block polaroid-img" alt="pic105">
+                            <div class="polaroid-caption">โอ้ พี่ปวดจู้ดดดดด ให้แฟนมายืน</div>
+                            <div class="polaroid-caption">พี่เลยรีบสุดๆ เป็นห่วงแฟนอยู่คนเดียวด้านนอก </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic106.jpg" class="d-block polaroid-img" alt="pic106">
+                            <div class="polaroid-caption"> แฟนพามาเที่ยวญี่ปุ่น (เก๊)</div>
+                            <div class="polaroid-caption"> แต่แฟนสวยมากครับวันนี้ ออร่าสุ้่ดในตลาดต้นตาล</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic107.jpg" class="d-block polaroid-img" alt="pic107">
+                            <div class="polaroid-caption">แฟนถ่ายรูปสวยมากกกก</div>
+                            <div class="polaroid-caption">ว่าละทำไมเพื่อนให้ถ่ายให้บ่อยๆ ฝีมือชัดๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic108.jpg" class="d-block polaroid-img" alt="pic108">
+                            <div class="polaroid-caption">อันนี้ SWAG มากครับคุณแฟนน</div>
+                            <div class="polaroid-caption">เท่มากกกกก ชอบมากกก ไว่้มาถ่ายด้วยกันอีกนะ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic109.jpg" class="d-block polaroid-img" alt="pic109">
+                            <div class="polaroid-caption">เอาแล้ว เข้าช่วงบู้บี้แมวว</div>
+                            <div class="polaroid-caption"> หยกชอบใจมาก บู้บี้แมวด้วยภาพ จำได้ว่าเราหัวเราะด้วยกันสนุกมากเลยนะ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic110.jpg" class="d-block polaroid-img" alt="pic110">
+                            <div class="polaroid-caption">ตกดึกมาหากิจกรรมทำร่วมกันซะหน่อย</div>
+                            <div class="polaroid-caption">มาต่อเลโก้กันนน แอบมีแวะนอกทางนิดหน่อย5555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic111.jpg" class="d-block polaroid-img" alt="pic111">
+                            <div class="polaroid-caption">เย้ เสดแล้ว น่ารักมากกกก</div>
+                            <div class="polaroid-caption">บอกตูด ปวดหลังกันมาก แต่มีความสุขสุดๆเล้ยยย</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic112.jpg" class="d-block polaroid-img" alt="pic112">
+                            <div class="polaroid-caption"> หิว เลยพากันมากินตี๋น้อยยยยย</div>
+                            <div class="polaroid-caption">พี่หยกหยอกเด็กได้เก่งมาก มีแววเป็นแม่ดีเด่น แบะๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic113.jpg" class="d-block polaroid-img" alt="pic113">
+                            <div class="polaroid-caption">มากินหม่าล่าที่หยกชอบมากินบ่อยๆ</div>
+                            <div class="polaroid-caption">ชามใหญ่มาก คุ้มๆๆๆ อร่อยๆ ต้องไปซ้ำ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic114.jpg" class="d-block polaroid-img" alt="pic114">
+                            <div class="polaroid-caption">วันก่อนกลับบบ ฮืออออ </div>
+                            <div class="polaroid-caption">หยกพามากินข้าวอร่อยๆที่่หอหยกกกก ฮืออ เย้</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic115.jpg" class="d-block polaroid-img" alt="pic115">
+                            <div class="polaroid-caption">ไปต่อที่คาเฟ่แมว คือร้านแรกไปละ ไม่ใช่ที่ของเรา555</div>
+                            <div class="polaroid-caption">เลยมาต่อร้านหลังมอ ค่อยพูดได้หน่อย น่ารักมากทั้งคนทั้งแมว</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic116.jpg" class="d-block polaroid-img" alt="pic116">
+                            <div class="polaroid-caption">แฟนถ่ายรูปให้อีกแล้ววว</div>
+                            <div class="polaroid-caption">บอกแล้ววว หยกมีความสามารถ ดีมากกก</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic117.jpg" class="d-block polaroid-img" alt="pic117">
+                            <div class="polaroid-caption"> หยกลืมไปสอบบบบบบบบ</div>
+                            <div class="polaroid-caption"> ละพี่มานั่งเคียส และเศร้าด้วยย จะต้องไปแย้ววว ฮืออ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic118.jpg" class="d-block polaroid-img" alt="pic118">
+                            <div class="polaroid-caption"> พี่ไปเชียงใหม่แยบ้ววววแต่แฟนที่น่ารักส่งรูปว่าถึงแย้ว</div>
+                            <div class="polaroid-caption"> พี่ก้สบายใจ เห็นบ่นว่าจ่ายค่าแกร้ป2รอบ โอ่เอ๋ TT</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic119.jpg" class="d-block polaroid-img" alt="pic119">
+                            <div class="polaroid-caption">หยกกลืมเติมไฟฟฟฟฟฟ</div>
+                            <div class="polaroid-caption">มันเป็นครั้งแรก เลยแคปไว้ แหะๆๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic120.jpg" class="d-block polaroid-img" alt="pic120">
+                            <div class="polaroid-caption">ก่อนสอบก็มีกำลังใจจากแฟนคนนึง</div>
+                            <div class="polaroid-caption">ช่วยได้เยอะมากๆๆ เพราะในห้องสอบคิดถึงแต่แฟนน</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic121.jpg" class="d-block polaroid-img" alt="pic121">
+                            <div class="polaroid-caption">แฟนอยู่ข้างนอก</div>
+                            <div class="polaroid-caption">นั่งรถซ้อนเพื่อน ผมปลิวเลยล่ะ55555</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic122.jpg" class="d-block polaroid-img" alt="pic122">
+                            <div class="polaroid-caption">หยกถ่ายคลิปปปป </div>
+                            <div class="polaroid-caption">ปลอมตัวเป็น Client ที่เท่มากกก ออแบล็ค</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic123.jpg" class="d-block polaroid-img" alt="pic123">
+                            <div class="polaroid-caption"> หยก everyday look</div>
+                            <div class="polaroid-caption">เทสดีมีสไตล์ ชอบๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic124.jpg" class="d-block polaroid-img" alt="pic124">
+                            <div class="polaroid-caption">หยกนั่งทำงานนน งกๆๆ</div>
+                            <div class="polaroid-caption">ค่าแรงไมไ่ด้เลย น่าสงสารจริงๆ มาเอากับพี่มาหนู</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic125.jpg" class="d-block polaroid-img" alt="pic125">
+                            <div class="polaroid-caption">กลับมาเล่นโรบูดด้วยกานนนน</div>
+                            <div class="polaroid-caption">พี่เป็นหมาหยกเป็นเจ้าของงงง เท่จ้าดๆๆๆๆ</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic126.jpg" class="d-block polaroid-img" alt="pic126">
+                            <div class="polaroid-caption">หยกแคปรูปมาให้ดู สงสัยจะชอบ </div>
+                            <div class="polaroid-caption">พี่ติดกิ้ปปป หยกติดตีนตุ๊กแก555484</div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="images/pic127.jpg" class="d-block polaroid-img" alt="pic127">
+                            <div class="polaroid-caption">หยกสองนิ้ววววว น่ารักมากกกกก</div>
+                            <div class="polaroid-caption">เอ่อที่พี่บอกหยกว่าทำงานๆ คืองานนี้แหละนะ555555 ตั้งใจทำกว่างานจริงซะอีก</div>
+                        </div>
+
                     </div>
-                    
-                    <button class="carousel-control-prev" type="button" data-bs-target="#memCarousel" data-bs-slide="prev" onclick="playSound()">
-                        <span class="carousel-control-prev-icon filter-black"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#memCarousel" data-bs-slide="next" onclick="playSound()">
-                        <span class="carousel-control-next-icon filter-black"></span>
-                    </button>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#memCarousel" data-bs-slide="prev" onclick="playSound()"><span class="carousel-control-prev-icon filter-black"></span></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#memCarousel" data-bs-slide="next" onclick="playSound()"><span class="carousel-control-next-icon filter-black"></span></button>
                 </div>
             </div>
         </div>
+        <style>.filter-black { filter: invert(0.8); }</style>
     </section>
 
     <section id="page-coupon" class="section-page">
@@ -177,7 +983,7 @@
                     <div class="coupon-inner">
                         <h1 class="display-1 mb-0">🎁</h1>
                         <h3 class="fw-bold text-danger mt-3" id="coupon-text">...</h3>
-                        <small class="text-muted d-block mt-2">*แคปจอนี้มาใช้สิทธิ์ได้เลย*</small>
+                        <small class="text-muted d-block mt-2">*แคปจอนี้มาใช้สิทธิ์กับพี่ได้เลยน้าาา*</small>
                     </div>
                 </div>
             </div>
@@ -188,13 +994,13 @@
     <section id="page-quiz" class="section-page">
         <div class="container">
             <div class="glass-card col-md-8 mx-auto" style="min-height: 400px;">
-                <h3 class="text-center mb-4 fw-bold text-primary">แฟนพันธุ์แท้ 🧐</h3>
+                <h3 class="text-center mb-4 fw-bold text-primary">คำถามของชั้นและเธอ 💐</h3>
                 <div id="quiz-container"></div>
                 <div id="quiz-result" class="text-center d-none mt-5">
                     <h1 class="display-4">🎉</h1>
-                    <h3>คะแนนของคุณ: <span id="score-val" class="text-danger fw-bold"></span>/5</h3>
+                    <h3>คะแนนของอ้วนน: <span id="score-val" class="text-danger fw-bold"></span>/10</h3>
                     <p id="score-msg" class="lead"></p>
-                    <button class="btn btn-main mt-4" onclick="playSound(); resetQuiz()">เล่นใหม่</button>
+                    <button class="btn btn-main mt-4" onclick="playSound(); resetQuiz()">เอาใหม่มั้ยยคั้บอ้วน</button>
                 </div>
             </div>
         </div>
@@ -204,7 +1010,7 @@
         <div class="container text-center d-flex flex-column justify-content-center h-100">
             <div class="glass-card py-5">
                 <i class="bi bi-heart-fill text-danger fs-1 mb-3"></i>
-                <h2 class="fw-bold text-danger">Together For</h2>
+                <h2 class="fw-bold text-danger">Together</h2>
                 <div class="mt-4 row justify-content-center g-2 px-2">
                     <div class="col-auto"><div class="time-box"><div id="t-years" class="time-val">0</div><div>Years</div></div></div>
                     <div class="col-auto"><div class="time-box"><div id="t-days" class="time-val">0</div><div>Days</div></div></div>
@@ -212,7 +1018,7 @@
                     <div class="col-auto"><div class="time-box"><div id="t-mins" class="time-val">0</div><div>Mins</div></div></div>
                     <div class="col-auto"><div class="time-box"><div id="t-secs" class="time-val">0</div><div>Secs</div></div></div>
                 </div>
-                <p class="mt-5 text-muted small">นับตั้งแต่ 16 ม.ค. 2569</p>
+                <p class="mt-5 text-muted small">ทุกอย่างเริ่มจาก 16 ม.ค. 2569</p>
             </div>
         </div>
     </section>
@@ -233,7 +1039,7 @@
             <div class="glass-card col-md-6 mx-auto py-5">
                 <h2 class="mb-4">Our Song 🎵</h2>
                 <div class="vinyl-record" id="vinyl"><div class="vinyl-inner"></div></div>
-                <p class="mb-3">เพลงนี้มอบให้เธอนะ...</p>
+                <p class="mb-3">เพลงนี้มอบให้หยกนะ...</p>
                 <audio id="audioPlayer" controls class="w-100 mt-3"><source src="images/music.mp3" type="audio/mpeg"></audio>
             </div>
         </div>
@@ -243,7 +1049,7 @@
         <div class="d-flex flex-column justify-content-center align-items-center h-100 text-center">
             <div class="glass-card p-5" onclick="randReason()">
                 <i class="bi bi-heart-fill text-danger display-1 mb-3"></i>
-                <h3 class="fw-bold">เหตุผลที่รักเธอ</h3>
+                <h3 class="fw-bold">เหตุผลที่รักน้องหยก</h3>
                 <h4 id="reason-txt" class="text-primary mt-4 fw-bold">...</h4>
             </div>
         </div>
@@ -252,7 +1058,7 @@
     <section id="page-date" class="section-page">
         <div class="d-flex flex-column justify-content-center align-items-center h-100 text-center">
             <div class="glass-card p-5">
-                <h3 class="fw-bold mb-4">เดทถัดไปทำไรดี? 📅</h3>
+                <h3 class="fw-bold mb-4">GIFT 🎁</h3>
                 <h2 id="date-txt" class="fw-bold text-danger">???</h2>
                 <button class="btn-main mt-4" onclick="randDate()">สุ่มสถานที่</button>
             </div>
@@ -274,27 +1080,28 @@
         const CONFIG = {
             passcode: "160169", 
             startDate: "2026-01-16", 
-            letterMessage: `ถึง... คนดีของเค้า\n\nสุขสันต์วันวาเลนไทน์นะ! \nขอบคุณที่เข้ามาเป็นเรื่องราวดีๆ ในชีวิตเค้านะ\nขอให้เราได้ฉลองวันนี้ด้วยกันไปอีกนานๆ เลย\nรักเธอที่สุดในโลก ❤️\n\nจาก... เค้าเอง`,
+            letterMessage: `ถึง... น้องหยกคนดีของพี่ได๊\n\nสุขสันต์วันวาเลนไทน์น้าาา! \nขอบคุณที่เข้ามาเป็นเรื่องราวดีๆ ในชีวิตพี่นะ มันดีมากเลยนะ\nขอให้พี่กับหยกอยู่ด้วยกันไปนานๆๆๆเลยน้าา คงไม่เจอใครดีเท่าหยกอีกแล้วน่ะ \nรักอ้วนที่สุดในโลกเล้ยยย ❤️\n\nจาก... แฟนที่น่ารักคนนี้เอง`,
             quizData: [
-                { q: "เราเจอกันครั้งแรกที่ไหน?", options: ["โรงเรียน", "ห้าง", "ร้านกาแฟ", "ในแชท"], ans: 0 },
-                { q: "อาหารที่แฟนชอบกินที่สุด?", options: ["ชาบู", "ซูชิ", "ส้มตำ", "ข้าวมันไก่"], ans: 0 },
-                { q: "วันที่เราตกลงเป็นแฟนกัน?", options: ["14 กุมภา", "1 มกรา", "25 ธันวา", "วันลอยกระทง"], ans: 0 },
-                { q: "เราชอบทะเลหรือภูเขามากกว่ากัน?", options: ["ทะเล", "ภูเขา"], ans: 1 },
-                { q: "คำพูดติดปากของเค้าคือ?", options: ["หิวข้าว", "ง่วงนอน", "คิดถึง", "บ่นไรอะ"], ans: 0 }
+                { q: "เราเจอกันครั้งแรกที่ไหน?", options: ["โรงพัก", "เซนทรัล", "สนามบิน", "มหาลัย"], ans: 2 },
+                { q: "อาหารที่พี่ชอบกินที่สุด?", options: ["ชาบู", "แกงเขียวหวาน", "ส้มตำ", "ก๋วยเตี๋ยว"], ans: 1 },
+                { q: "วันที่เราตกลงเป็นแฟนกัน?", options: ["12 เมษา", "16 มกรา", "5 ธันวา", "วันลอยกระทง"], ans: 1 },
+                { q: "เราชอบทะเลหรือภูเขามากกว่ากัน?", options: ["ทะเล", "ภูเขา"], ans: 0 },
+                { q: "สีที่เค้าชอบที่สุดคือสีอะไร?", options: ["ขาว", "ดำ", "เขียว", "ฟ้า"], ans: 3 },
+                { q: "พี่ชอบอะไรที่สุด?", options: ["กิน", "นอน", "หยก", "แมว"], ans: 2 },
+                { q: "บ้านเกิดพี่จังหวัดอะไร?", options: ["เชียงใหม่", "ขอนแก่น", "น่าน", "พะเยา"], ans:2 },
+                { q: "ทำไมหยกถึงน่ารักขนาดนี้?", options: ["บ่แม่น", "หยกนิสัยน่ารัก", "ผิด", "กินแมว"], ans: 1 },
+                { q: "พี่กับหยกดูหนังด้วยกันเรื่องอะไร?", options: ["Avatar", "Zootopia", "Eternity", "Mercy"], ans: 2 },
+                { q: "พี่รักหยกมากแค่ไหน?", options: ["น้อยมาก", "นิดนึง", "รักอยู่", "ที่สุดในโลกกกกกกก"], ans: 3 }
             ],
-            coupons: ["นวดฟรี 30 นาที 💆‍♀️", "ตามใจ 1 วัน 👑", "เลี้ยงข้าว 1 มื้อ 🍲", "ห้ามงอน 1 ครั้ง 🥺", "จุ๊บ 10 ที 😘"],
-            reasons: ["เพราะเธอคือรอยยิ้มของเค้า", "เพราะเธอทำอาหารอร่อย", "เพราะเธอคอยรับฟังเสมอ", "เพราะเธอเป็นตัวของตัวเอง", "เพราะเธอขี้อ้อนน่ารัก"],
-            dates: ["ดูหนังรอบดึก 🍿", "ไปปิคนิคที่สวน 🌳", "กินบุฟเฟต์จุกๆ 🥩", "ขับรถเล่นดูวิว 🚗", "ทำอาหารกินกันเอง 🍳"],
+            coupons: ["ไปขอนแก่น 1 วัน 🚗", "ตามใจ 1 วัน 👑", "เลี้ยงข้าว 1 มื้อ 🍲", "ห้ามงอน 1 ครั้ง 🥺", "จุ๊บ 100 ที 😘","ฟรีค่าชานมไข่มุก 1 แก้ว 🧋","ให้กัด 1 ที 👄"],
+            reasons: ["เพราะหยกคือรอยยิ้มของพี่ ทำให้พี่ยิ้มได้ตลอดเลยย", "เพราะเธอเลี้ยงอาหารเก่งงง ขุนพี่เกิ้นนน", "เพราะหยกคอยรับฟังพี่เสมอๆ น่ารักจริงๆ", "เพราะเธอเป็นตัวของตัวเองได้น่ารักมาก", "เพราะหยก"],
+            dates: ["ดูหนังรอบดึก 🍿", "ไปกินตี๋น้อย 🌳", "กินบุฟเฟต์จุกๆ 🥩", "ขับรถเล่นดูวิว 🚗", "ทำอาหารกินกันเอง 🍳","ไปขอนแก่นกันนน","ไปกรุงเทพกันนน"],
             memories: [
-                "จำวันแรกที่เราคุยกันได้ไหม? ตอนนั้นเขินมากเลยนะ ไม่คิดว่าจะรักเธอได้ขนาดนี้",
-                "เดทแรกที่ไปเที่ยวด้วยกัน เธอแต่งตัวน่ารักมาก จนเราไม่กล้ามองหน้าเลย",
-                "ทุกครั้งที่ตื่นมาแล้วรู้ว่ามีเธออยู่ข้างๆ คือความทรงจำที่ดีที่สุดในทุกๆ วันของเค้าเลย"
-            ],
-            // --- ตั้งค่า Gallery ตรงนี้ ---
-            gallery: {
-                path: 'images/', // โฟลเดอร์ที่เก็บรูป
-                maxFileIndex: 127     // pic0 ถึง pic127
-            }
+                "จำวันแรกที่เราเจอหน้าคุยกันได้มั้ย ตอนนั้นเขินมากเลยนะ ไม่คิดว่าหยกจะมากอดพี่ ยังคงอยู่ในใจซีนนั้น ชอบๆ",
+                "เดทแรกที่ไปเที่ยวด้วยกัน เธอแต่งตัวน่ารักมาก จนพี่ไม่กล้ามองหน้าเลย น่ารักจริงๆ",
+                "ทุกครั้งที่ตื่นมาแล้วรู้ว่ามีหยกในสาย คือความทรงจำที่ดีที่สุดในทุกๆ วันของพี่เลย",
+                "และทุกครั้งก่อนนอนมีหยกอยู่ด้วย พี่หลับฝันดีทุกคืนเล้ยยย",
+            ]
         };
 
         function playSound() {
@@ -324,60 +1131,6 @@
             }
         }
 
-        // --- Gallery Logic (New) ---
-        function initGallery() {
-            const container = document.getElementById('gallery-container');
-            container.innerHTML = ''; // Clear loading state
-            
-            const max = CONFIG.gallery.maxFileIndex;
-            let hasAddedActive = false;
-
-            for(let i = 0; i <= max; i++) {
-                // 1. Create wrapper div
-                const slide = document.createElement('div');
-                slide.className = 'carousel-item';
-                
-                // 2. Create Image element first
-                const img = document.createElement('img');
-                img.src = `${CONFIG.gallery.path}pic${i}.jpg`;
-                img.className = 'd-block polaroid-img';
-                
-                // Caption
-                const caption = document.createElement('div');
-                caption.className = 'polaroid-caption';
-                caption.innerText = `Memory #${i}`;
-
-                // 3. Handle Error (If JPG not found, try MP4)
-                img.onerror = function() {
-                    this.remove(); // Remove broken image
-                    
-                    const vid = document.createElement('video');
-                    vid.src = `${CONFIG.gallery.path}pic${i}.mp4`;
-                    vid.className = 'd-block polaroid-img';
-                    vid.loop = true;
-                    vid.autoplay = true;
-                    vid.muted = true;
-                    vid.playsInline = true;
-
-                    // If Video also not found -> Remove entire slide
-                    vid.onerror = function() {
-                        slide.remove();
-                        checkActiveSlide(); // Re-check active status
-                    };
-
-                    slide.insertBefore(vid, caption);
-                };
-
-                // Add to DOM
-                slide.appendChild(img);
-                slide.appendChild(caption);
-                container.appendChild(slide);
-            }
-
-            // Set first item active after short delay
-            setTimeout(checkActiveSlide, 500);
-        }
-
         function checkActiveSlide() {
             const slides = document.querySelectorAll('#gallery-container .carousel-item');
             if (slides.length > 0) {
@@ -386,12 +1139,6 @@
                 if (!hasActive) slides[0].classList.add('active');
             }
         }
-        
-        // Initialize Gallery on Load
-        window.onload = function() {
-            createHearts();
-            initGallery();
-        };
 
         // --- Other Logic ---
         let currentPin = "";
@@ -447,15 +1194,6 @@
                 document.getElementById('t-mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 document.getElementById('t-secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
             }, 1000);
-        }
-
-        function createHearts() {
-            const container = document.getElementById('heartsContainer');
-            for(let i=0; i<15; i++) {
-                const heart = document.createElement('div'); heart.classList.add('heart-float');
-                heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                container.appendChild(heart);
-            }
         }
 
         let typed = false;
