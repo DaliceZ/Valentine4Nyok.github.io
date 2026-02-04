@@ -10,6 +10,53 @@
 
     <style>
         /* --- Styles เดิม --- */
+        /* --- Styles สำหรับหน้าขูดภาพ (Page Reveal) --- */
+        #page-reveal .glass-card {
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .scratch-area {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 4px solid #fff;
+        }
+
+        .secret-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            transition: opacity 0.8s ease; /* ปรับตรงนี้เพิ่มความสมูทตอนค่อยๆ โผล่ขึ้นมา */
+        }
+        /* เพิ่ม 2 class นี้ลงไปครับ */
+        .opacity-0 {
+            opacity: 0 !important;
+        }
+
+        .opacity-100 {
+            opacity: 1 !important;
+        }
+
+        #scratch-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            cursor: grab;
+            touch-action: none; /* สำคัญมาก! ป้องกันจอมือถือเลื่อนตอนขูด */
+        }
         :root { --bg-color-1: #ff9a9e; --bg-color-2: #fad0c4; --bg-color-3: #ffd1ff; --primary-color: #ff4d6d; }
         body { font-family: 'Prompt', sans-serif; background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3)); background-size: 400% 400%; animation: gradientMove 15s ease infinite; min-height: 100vh; color: #5a5a5a; overflow-x: hidden; -webkit-tap-highlight-color: transparent; user-select: none; }
         @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
@@ -86,6 +133,28 @@
             padding: 20px 20px 60px 20px; /* Thicker bottom for that Polaroid 'label' look */
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
+        /* ตกแต่งวิดีโอในหน้า GIFT */
+        #page-date .polaroid-frame {
+            margin: 0 auto;
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 1px solid #ddd;
+        }
+
+        #page-date .polaroid-caption {
+            font-family: 'Mali', cursive;
+            font-size: 1.3rem;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        /* ปรับปรุงหัวใจลอยให้สมูทขึ้น */
+        .heart-float {
+            z-index: 1; /* ให้อยู่หลังปุ่มและเนื้อหา */
+            filter: blur(1px);
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -129,6 +198,27 @@
                     <div style="width: 75px;"></div><button class="pin-btn" onclick="enterPin(0)">0</button><button class="pin-btn text-danger" onclick="deletePin()"><i class="bi bi-backspace"></i></button>
                 </div>
                 <div id="error-msg" class="text-danger mt-3 d-none fw-bold bg-white rounded p-1 shadow-sm">รหัสผิดนะจ๊ะ ลองใหม่!</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="page-reveal" class="section-page">
+        <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+            <div class="glass-card p-4 text-center">
+                <h3 class="fw-bold text-primary mb-2">✨ ความลับของวันนี้ ✨</h3>
+                <p class="text-muted small">ใช้นิ้วถูๆ เพื่อดูรูปข้างในสิคะ</p>
+                
+                <div class="scratch-area" id="scratch-container">
+                    <img src="images/pic94.jpg" class="secret-img" id="secret-image" alt="Secret">
+                    <canvas id="scratch-canvas"></canvas>
+                </div>
+
+                <div id="reveal-btn" class="d-none mt-3" style="animation: pop 0.5s ease;">
+                    <p class="fw-bold text-danger mb-2">อุ๊ย! เจอคนน่ารัก 🥰</p>
+                    <button class="btn btn-main px-4" onclick="playSound(); goToPage('page-menu')">
+                        ไปหน้าเมนูหลัก <i class="bi bi-arrow-right-short"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -1056,11 +1146,30 @@
     </section>
 
     <section id="page-date" class="section-page">
-        <div class="d-flex flex-column justify-content-center align-items-center h-100 text-center">
-            <div class="glass-card p-5">
-                <h3 class="fw-bold mb-4">GIFT 🎁</h3>
-                <h2 id="date-txt" class="fw-bold text-danger">???</h2>
-                <button class="btn-main mt-4" onclick="randDate()">สุ่มสถานที่</button>
+        <div class="container">
+            <div class="text-center mb-4">
+                <h3 class="text-white fw-bold" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">🎁 Special Gift For You</h3>
+                <p class="text-white-50">ของขวัญพิเศษสำหรับคนพิเศษของพี่</p>
+            </div>
+            
+            <div class="polaroid-frame" style="transform: rotate(1deg); max-width: 450px;">
+                <div class="video-container" style="position: relative; background: #000; border-radius: 4px; overflow: hidden;">
+                    <video controls class="w-100 d-block polaroid-video style="max-height: 500px; object-fit: cover;">
+                        <source src="images/pic0.mp4" type="video/mp4">
+                        Browser ของคุณไม่รองรับการเล่นวิดีโอ
+                    </video>
+                </div>
+                <div class="polaroid-caption">
+                    <i class="bi bi-stars text-warning"></i>
+                    <span> แด่น้องหยกคนดีของพี่ </span>
+                    <i class="bi bi-heart-fill text-danger"></i>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <div class="glass-card d-inline-block px-4 py-2" style="border-radius: 15px;">
+                    <p class="mb-0 small text-muted">"ถึงจะเล็กน้อย แต่พี่ตั้งใจทำให้หยกนะคั้บบ"</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1101,10 +1210,68 @@
                 "เดทแรกที่ไปเที่ยวด้วยกัน เธอแต่งตัวน่ารักมาก จนพี่ไม่กล้ามองหน้าเลย น่ารักจริงๆ",
                 "ทุกครั้งที่ตื่นมาแล้วรู้ว่ามีหยกในสาย คือความทรงจำที่ดีที่สุดในทุกๆ วันของพี่เลย",
                 "และทุกครั้งก่อนนอนมีหยกอยู่ด้วย พี่หลับฝันดีทุกคืนเล้ยยย",
+                "ชอบบู้บี้แมว แกล้งแมว ถ่ายรูปขำๆ5555",
+                "และทุกครั้งก่อนนอนมีหยกอยู่ด้วย พี่หลับฝันดีทุกคืนเล้ยยย",
             ]
         };
+        // ฟังก์ชันสร้างหัวใจลอย
+        // --- ฟังก์ชันใหม่: สร้างไอเทมลอยแบบสุ่ม ---
+            function createHeart() {
+                const container = document.getElementById('heartsContainer');
+                if (!container) return;
 
-        function playSound() {
+                const element = document.createElement('div');
+                
+                // สุ่มประเภทไอเทม (เพิ่มโอกาสออกอิโมจิให้เยอะหน่อย)
+                // 0-2 = หัวใจ CSS เดิม, 3-8 = อิโมจิใหม่
+                const type = Math.floor(Math.random() * 9);
+                
+                // สุ่มขนาดพื้นฐาน
+                const baseSize = Math.random() * 12 + 12; // ขนาดประมาณ 12px - 24px
+
+                if (type < 3) {
+                    // === แบบที่ 1: หัวใจ CSS เดิม ===
+                    element.className = 'heart-float css-heart';
+                    element.style.width = baseSize + 'px';
+                    element.style.height = baseSize + 'px';
+                    
+                    // โทนสีชมพู-แดง-ขาว
+                    const colors = ['#ff758c', '#ff3f34', '#ffc3cf', '#ffffff', '#ff9a9e'];
+                    element.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                } else {
+                    // === แบบที่ 2: อิโมจิใหม่ ===
+                    element.className = 'heart-float emoji-float';
+                    element.style.fontSize = (baseSize + 4) + 'px'; // อิโมจิให้ใหญ่กว่านิดนึง
+                    
+                    // รายการอิโมจิที่จะสุ่ม (เพิ่มลดได้ตามชอบ)
+                    const emojis = ['🌹', '🌷', '💐', '🌸', '🎁', '🎀', '✨', '💖', '🧸', '💌'];
+                    element.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                }
+
+                // --- การตั้งค่าตำแหน่งและเวลา (ใช้ร่วมกัน) ---
+                element.style.left = Math.random() * 95 + 'vw'; // สุ่มตำแหน่งแนวนอน
+                
+                // สุ่มความเร็ว (6 ถึง 11 วินาที) - ยิ่งเลขมากยิ่งช้า
+                const duration = Math.random() * 5 + 6;
+                element.style.animationDuration = duration + 's';
+                
+                // สุ่มเวลาเริ่มดีเลย์เล็กน้อย เพื่อไม่ให้ขึ้นมาพร้อมกันเป็นตับ
+                element.style.animationDelay = Math.random() * 1 + 's';
+
+                container.appendChild(element);
+
+                // ลบ element ทิ้งเมื่อลอยพ้นจอแล้ว เพื่อไม่ให้รกหน่วยความจำ
+                setTimeout(() => {
+                    element.remove();
+                }, (duration + 1) * 1000);
+            }
+
+            // เรียกใช้งานฟังก์ชันทุกๆ 0.4 วินาที (ปรับเลขน้อยลง = ออกถี่ขึ้น)
+            setInterval(createHeart, 400);
+
+
+            function playSound() {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
             const osc = ctx.createOscillator(); const gain = ctx.createGain();
             osc.frequency.setValueAtTime(600, ctx.currentTime);
@@ -1116,19 +1283,27 @@
         }
 
         function goToPage(pageId) {
+            // ... (โค้ดเดิมส่วน remove active-section) ...
             document.querySelectorAll('.section-page').forEach(el => el.classList.remove('active-section'));
             document.getElementById(pageId).classList.add('active-section');
             window.scrollTo(0, 0);
+
             const backBtn = document.getElementById('backBtn');
-            if(['page-landing', 'page-passcode', 'page-menu'].includes(pageId)) backBtn.classList.add('hidden');
+            // --- แก้ตรงนี้: เพิ่ม 'page-reveal' เข้าไปในรายการซ่อนปุ่ม Back ---
+            if(['page-landing', 'page-passcode', 'page-menu', 'page-reveal'].includes(pageId)) backBtn.classList.add('hidden');
             else backBtn.classList.remove('hidden');
+
+            // ... (โค้ดเดิมส่วนอื่นๆ) ...
             if(pageId === 'page-letter') startTypewriter();
             if(pageId === 'page-quiz') loadQuizStep(0);
             if(pageId === 'page-timer') updateTimer();
-            if(pageId !== 'page-music') {
-                const vinyl = document.getElementById('vinyl');
-                if(vinyl) vinyl.classList.remove('spinning');
+            
+            // --- เพิ่มตรงนี้: ถ้าเข้าหน้า page-reveal ให้เริ่มระบบขูด ---
+            if(pageId === 'page-reveal') {
+                setTimeout(initScratch, 0); // รอ animation เฟดหน้านิดนึง
             }
+            
+            // ... (โค้ดเดิมส่วนเพลง) ...
         }
 
         function checkActiveSlide() {
@@ -1142,13 +1317,19 @@
 
         // --- Other Logic ---
         let currentPin = "";
-        function enterPin(num) {
+       function enterPin(num) {
             playSound();
             if(currentPin.length < 6) {
                 currentPin += num; updateDots();
                 if(currentPin.length === 6) {
-                    if(currentPin === CONFIG.passcode) setTimeout(() => goToPage('page-menu'), 200);
-                    else { document.getElementById('error-msg').classList.remove('d-none'); currentPin = ""; setTimeout(updateDots, 600); }
+                    if(currentPin === CONFIG.passcode) {
+                        // --- แก้ตรงนี้: เปลี่ยนเป็นไปหน้า page-reveal ---
+                        setTimeout(() => goToPage('page-reveal'), 200); 
+                    } else { 
+                        document.getElementById('error-msg').classList.remove('d-none'); 
+                        currentPin = ""; 
+                        setTimeout(updateDots, 600); 
+                    }
                 }
             }
         }
@@ -1205,6 +1386,55 @@
 
         const audio = document.getElementById('audioPlayer'); const vinyl = document.getElementById('vinyl');
         audio.onplay = () => vinyl.classList.add('spinning'); audio.onpause = () => vinyl.classList.remove('spinning');
+
+        // --- ฟังก์ชันขูดภาพ (เอามาจากตัวอย่างของคุณ ปรับให้เข้ากับธีม) ---
+        function initScratch() {
+            const container = document.getElementById('scratch-container');
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            const revealBtn = document.getElementById('reveal-btn');
+
+            // 1. ตั้งขนาด Canvas ให้เท่ากับกรอบ
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+
+            // 2. เทสีทับลงไป (ใช้สีชมพูพาสเทลให้เข้าธีม)
+            ctx.fillStyle = '#ffc3cf'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 3. เขียนข้อความทับ
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 24px Prompt'; // ใช้ฟอนต์ของเว็บ
+            ctx.textAlign = 'center';
+            ctx.fillText("ขูดตรงนี้เบาๆ ❤️", canvas.width/2, canvas.height/2);
+
+            let isScratched = false;
+
+            // ฟังก์ชันวาด (ลบสีออก)
+            const scratch = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                // รองรับทั้งเมาส์และนิ้วสัมผัส
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+                ctx.globalCompositeOperation = 'destination-out'; // โหมดลบ
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, Math.PI * 2); // หัวแปรงขนาด 30
+                ctx.fill();
+
+                // ถ้าเริ่มขูดแล้ว ให้โชว์ปุ่มไปต่อ
+                if (!isScratched) {
+                    isScratched = true;
+                    setTimeout(() => {
+                        revealBtn.classList.remove('d-none');
+                    }, 800); // หน่วงเวลาแป๊บนึงค่อยโชว์ปุ่ม
+                }
+            };
+
+            // Event Listeners
+            canvas.addEventListener('mousemove', (e) => { if(e.buttons === 1) scratch(e); });
+            canvas.addEventListener('touchmove', scratch);
+        }
     </script>
 </body>
 </html>
