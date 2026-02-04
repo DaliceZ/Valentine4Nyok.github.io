@@ -160,6 +160,362 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes pop { 0% { transform: scale(0.5); opacity:0; } 100% { transform: scale(1); opacity:1; } }
         .filter-black { filter: invert(0.8); }
+        /* --- CSS ใหม่สำหรับ Slot Machine, Cards, Gachapon --- */
+
+        /* 1. Love Slot Machine (หน้าคูปอง) */
+        .slot-machine-container {
+            background: #ff9a9e;
+            border-radius: 30px;
+            padding: 20px;
+            border: 8px solid #ff758c;
+            box-shadow: 0 10px 0 #d9697c, 0 20px 20px rgba(0,0,0,0.2);
+            width: 320px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .slot-window {
+            background: white;
+            border-radius: 15px;
+            height: 120px;
+            overflow: hidden;
+            border: 4px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .slot-reel {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1); /* เอฟเฟคหมุน */
+            will-change: transform; /* ช่วยให้การหมุนลื่นไหลขึ้นในมือถือ */
+        }
+        .slot-item {
+            height: 120px;       /* ความสูงต้องคงที่ */
+            width: 100%;
+            flex-shrink: 0;      /* 🔥 สำคัญมาก: ห้ามบีบอัดความสูงเด็ดขาด ไม่งั้นหมุนแล้วหาย */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;   /* ปรับขนาดตัวอักษรให้อ่านง่ายขึ้น */
+            font-weight: bold;
+            color: #ff4d6d;
+            text-align: center;
+            padding: 0 10px;
+            border-bottom: 1px dashed rgba(255, 182, 193, 0.5); /* เส้นประสีจางๆ */
+            background: white;   /* พื้นหลังขาว */
+        }
+        .slot-lever-ball {
+            width: 40px; height: 40px; background: #ff4d6d; border-radius: 50%;
+            position: absolute; right: -30px; top: -50px; border: 3px solid #d93654; cursor: pointer;
+            box-shadow: 0 5px 0 #9e2a40; transition: top 0.2s;
+        }
+        .slot-lever-stick {
+            width: 10px; height: 60px; background: #ddd; position: absolute; right: -15px; top: -15px; z-index: -1;
+        }
+        .slot-lever-base {
+            width: 20px; height: 40px; background: #444; position: absolute; right: -20px; top: 30px; border-radius: 0 10px 10px 0;
+        }
+        .slot-active .slot-lever-ball { top: 30px; } /* เอฟเฟคโยกคันโยก */
+
+        /* 2. Love Card Stack (หน้าเหตุผล) */
+        .stack-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 20px auto;
+            perspective: 1000px;
+        }
+        .love-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s;
+            border: 2px solid #fff0f5;
+            cursor: pointer;
+        }
+        .love-card h3 { font-size: 5rem; margin-bottom: 20px; }
+        .love-card p { font-size: 1.2rem; color: #555; line-height: 1.6; font-weight: 600; }
+        .card-out {
+            transform: translateX(100vw) rotate(30deg) !important; /* การ์ดบินออกขวา */
+            opacity: 0;
+        }
+
+        /* 3. Memory Gachapon (หน้าความทรงจำ) */
+        .gacha-machine {
+            width: 280px;
+            background: #a8e6cf;
+            border-radius: 100px 100px 20px 20px;
+            padding: 20px;
+            margin: 0 auto;
+            position: relative;
+            border: 6px solid #8bd3ba;
+            box-shadow: 0 15px 0 #6bbca0;
+        }
+        .gacha-glass {
+            width: 220px; height: 220px; background: rgba(255,255,255,0.6); border-radius: 50%;
+            margin: 10px auto; border: 5px solid rgba(255,255,255,0.8); position: relative; overflow: hidden;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1);
+        }
+        .gacha-ball {
+            width: 40px; height: 40px; border-radius: 50%; position: absolute; border: 2px solid rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 10px;
+        }
+        .gacha-knob {
+            width: 60px; height: 60px; background: #fff; border-radius: 50%; margin: 10px auto;
+            border: 4px solid #ddd; cursor: pointer; position: relative;
+            box-shadow: 0 5px 0 #ccc; transition: transform 0.5s;
+        }
+        .gacha-knob::after { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 6px; background: #ddd; transform: translateY(-50%); }
+        .gacha-exit {
+            width: 80px; height: 80px; background: #333; border-radius: 10px 10px 40px 40px;
+            margin: 0 auto; position: relative; overflow: hidden;
+        }
+        .dropped-ball {
+            width: 60px; height: 60px; border-radius: 50%; position: absolute; top: -100px; left: 10px;
+            transition: top 0.5s cubic-bezier(0.5, 0, 0.7, 1.5); border: 4px solid rgba(0,0,0,0.1);
+            cursor: pointer; animation: glow 1s infinite alternate;
+        }
+        .paper-popup {
+            animation: unfold 0.6s ease-out forwards; transform-origin: center;
+        }
+        @keyframes unfold { from { transform: scale(0); } to { transform: scale(1); } }
+        @keyframes glow { from { filter: brightness(1); } to { filter: brightness(1.2); } }
+        /* --- Gachapon V2.0 Styles --- */
+        .gacha-machine {
+            width: 300px;
+            background: #ffecf0; /* สีชมพูพาสเทล */
+            border-radius: 120px 120px 30px 30px;
+            padding: 20px;
+            margin: 0 auto;
+            position: relative;
+            border: 8px solid #ff8fa3;
+            box-shadow: 0 15px 0 #e07a8c, 0 25px 30px rgba(0,0,0,0.15);
+            z-index: 10;
+            transition: transform 0.1s;
+        }
+
+        /* เอฟเฟคเครื่องสั่นตอนหมุน */
+        .gacha-shaking {
+            animation: machineShake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        .gacha-glass {
+            width: 240px; height: 240px; 
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.4));
+            border-radius: 50%;
+            margin: 0 auto 15px; 
+            border: 6px solid #ffb3c1; 
+            position: relative; 
+            overflow: hidden;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* ลูกบอลภายในตู้ */
+        .inner-ball {
+            width: 45px; height: 45px; border-radius: 50%; position: absolute;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2), 2px 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        /* เอฟเฟคลูกบอลกระเด้งข้างใน */
+        .balls-mixing .inner-ball {
+            animation: mixBalls 0.6s infinite alternate;
+        }
+
+        .gacha-controls {
+            position: relative;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ff8fa3;
+            border-radius: 20px;
+            margin-top: -40px; /* ซ้อนทับกระจกนิดนึง */
+            z-index: 2;
+        }
+
+        .gacha-knob {
+            width: 70px; height: 70px; background: white; border-radius: 50%;
+            border: 6px solid #fff0f5; cursor: pointer; position: relative;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.1); 
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .gacha-knob::after { 
+            content: "TURN"; font-size: 10px; color: #ff8fa3; font-weight: bold;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+        }
+        .gacha-knob::before {
+            content: ""; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+            width: 10px; height: 20px; background: #ffb3c1; border-radius: 5px;
+        }
+
+        .gacha-exit {
+            width: 100px; height: 40px; background: #333; 
+            border-radius: 0 0 40px 40px; margin: 0 auto; 
+            position: relative; z-index: 1; overflow: visible;
+        }
+
+        /* ลูกบอลที่ตกลงมา */
+        .dropped-ball {
+            width: 70px; height: 70px; border-radius: 50%; 
+            position: absolute; left: 50%; transform: translateX(-50%);
+            top: -80px; /* ซ่อนไว้ข้างบนก่อน */
+            border: 4px solid rgba(255,255,255,0.5);
+            cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            z-index: 20;
+            opacity: 0;
+        }
+        .ball-bounce {
+            animation: dropBounce 1s cubic-bezier(0.35, 1.6, 0.5, 1) forwards;
+        }
+
+        /* การ์ด Popup ใหม่ */
+        .memory-card-popup {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 4px solid #ffb3c1;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            width: 85%; max-width: 320px; z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .memory-card-popup.show { transform: translate(-50%, -50%) scale(1); }
+
+        /* Confetti (เศษกระดาษโปรย) */
+        .confetti {
+            position: absolute; width: 10px; height: 10px; background: #f00;
+            animation: confettiFall 2s linear forwards; pointer-events: none; z-index: 99;
+        }
+
+        /* Keyframes */
+        @keyframes machineShake {
+            10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-1deg); }
+            20%, 80% { transform: translate3d(4px, 0, 0) rotate(1deg); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0) rotate(-2deg); }
+            40%, 60% { transform: translate3d(6px, 0, 0) rotate(2deg); }
+        }
+        @keyframes mixBalls {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(10px, -20px); }
+        }
+        @keyframes dropBounce {
+            0% { top: -60px; opacity: 1; transform: translateX(-50%) scale(0.8); }
+            60% { top: 20px; transform: translateX(-50%) scale(1.1); }
+            80% { top: 10px; transform: translateX(-50%) scale(0.95); }
+            100% { top: 15px; opacity: 1; transform: translateX(-50%) scale(1); }
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(300px) rotate(720deg); opacity: 0; }
+        }
+        /* --- 2. Love Card Stack V2 (หน้าเหตุผลแบบใหม่) --- */
+        .stack-container {
+            position: relative;
+            width: 300px;
+            height: 420px; /* เพิ่มความสูงนิดหน่อยเผื่อที่ให้ป้าย */
+            margin: 20px auto;
+            perspective: 1000px;
+        }
+
+        .love-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff, #fff5f7); /* พื้นหลังไล่สีจางๆ */
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 0 0 2px rgba(255,240,245,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease-out, box-shadow 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            backface-visibility: hidden;
+        }
+
+        /* เอฟเฟคตอนเอาเมาส์ชี้ หรือตอนจะกด */
+        .love-card:hover, .love-card:active {
+            box-shadow: 0 20px 45px rgba(255, 77, 109, 0.2);
+        }
+        .card-shake {
+            animation: cardShake 0.4s ease-in-out;
+        }
+
+        .reason-emoji { 
+            font-size: 5.5rem; 
+            margin-bottom: 25px; 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+        .love-card:hover .reason-emoji { transform: scale(1.1) rotate(5deg); }
+
+        .reason-text { 
+            font-size: 1.3rem; color: #444; line-height: 1.5; font-weight: 600; word-break: break-word;
+            font-family: 'Mali', cursive;
+        }
+
+        /* ป้ายบอกเลขข้อ */
+        .reason-badge {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(255, 77, 109, 0.15);
+            color: #ff4d6d;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .reason-hint {
+            position: absolute; bottom: 20px; width: 100%; text-align: center;
+            font-size: 0.85rem; color: #999; opacity: 0.7;
+        }
+
+        /* --- Animations การบินออกหลายทิศทาง --- */
+        /* บินออกขวาบน + หมุน */
+        @keyframes flyOutTR { to { transform: translate(120vw, -120vh) rotate(720deg) scale(0.5); opacity: 0; } }
+        /* บินออกซ้ายล่าง + หมุนกลับ */
+        @keyframes flyOutBL { to { transform: translate(-120vw, 120vh) rotate(-720deg) scale(0.5); opacity: 0; } }
+        /* บินขึ้นตรงๆ */
+        @keyframes flyOutUp { to { transform: translateY(-150vh) rotate(20deg) scale(0.8); opacity: 0; } }
+        /* บินลงตรงๆ */
+        @keyframes flyOutDown { to { transform: translateY(150vh) rotate(-20deg) scale(0.8); opacity: 0; } }
+
+        /* Class ที่ JS จะสุ่มมาใส่ */
+        .anim-fly-tr { animation: flyOutTR 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards; pointer-events: none; }
+        .anim-fly-bl { animation: flyOutBL 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards; pointer-events: none; }
+        .anim-fly-up { animation: flyOutUp 0.7s ease-in forwards; pointer-events: none; }
+        .anim-fly-down { animation: flyOutDown 0.7s ease-in forwards; pointer-events: none; }
+
+        @keyframes cardShake {
+            0%, 100% { transform: translateX(0) rotate(var(--base-rotate)); }
+            20% { transform: translateX(-5px) rotate(calc(var(--base-rotate) - 2deg)); }
+            40% { transform: translateX(5px) rotate(calc(var(--base-rotate) + 2deg)); }
+            60% { transform: translateX(-3px) rotate(calc(var(--base-rotate) - 1deg)); }
+            80% { transform: translateX(3px) rotate(calc(var(--base-rotate) + 1deg)); }
+        }
     </style>
 </head>
 <body>
@@ -236,7 +592,7 @@
                 <div class="menu-item" onclick="playSound(); goToPage('page-music')"><i class="bi bi-music-note-beamed"></i><span>เพลง</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-quiz')"><i class="bi bi-patch-question"></i><span>ทายใจกันน</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-coupon')"><i class="bi bi-ticket-perforated"></i><span>คูปองฟรี</span></div>
-                <div class="menu-item" onclick="playSound(); goToPage('page-reasons')"><i class="bi bi-heart-fill"></i><span>เหตุผลของพี่ที่รักหยก</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-reasons')"><i class="bi bi-heart-fill"></i><span>เหตุผล</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-date')"><i class="bi bi-gift-fill"></i><span>GIFT</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-memories')"><i class="bi bi-journal-bookmark-fill"></i><span>ความทรงจำดีๆ</span></div>
             </div>
@@ -1067,17 +1423,32 @@
 
     <section id="page-coupon" class="section-page">
         <div class="container text-center h-100 d-flex flex-column justify-content-center align-items-center">
-            <h2 class="fw-bold text-white mb-3" style="text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Love Coupons 🎰</h2>
-            <div id="coupon-display" class="d-none w-100">
-                <div class="coupon-ticket bg-white mx-auto">
-                    <div class="coupon-inner">
-                        <h1 class="display-1 mb-0">🎁</h1>
-                        <h3 class="fw-bold text-danger mt-3" id="coupon-text">...</h3>
-                        <small class="text-muted d-block mt-2">*แคปจอนี้มาใช้สิทธิ์กับพี่ได้เลยน้าาา*</small>
+            <h2 class="fw-bold text-white mb-4" style="text-shadow: 0 2px 5px rgba(0,0,0,0.2);">🎰 Love Slot Machine</h2>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            
+            <div class="slot-machine-container">
+                <div class="slot-lever-base"></div>
+                <div class="slot-lever-stick"></div>
+                <div class="slot-lever-ball" id="slot-handle" onclick="spinSlotMachine()"></div>
+
+                <div class="slot-window">
+                    <div class="slot-reel" id="slot-reel">
+                        <div class="slot-item">❓<br>???</div>
+                        </div>
+                </div>
+
+                <p class="text-white-50 small mt-2">กดที่ปุ่มสีแดงด้านขวาเพื่อสุ่ม!</p>
+                <div id="slot-result" class="d-none mt-3">
+                    <div class="glass-card p-3" style="animation: pop 0.5s;">
+                        <h5 class="fw-bold text-danger mb-0" id="slot-result-text"></h5>
+                        <small class="text-muted">แคปจอนี้มาใช้สิทธิ์ได้เลย!</small>
                     </div>
                 </div>
             </div>
-            <button id="btn-spin" class="btn btn-warning btn-lg rounded-pill px-5 fw-bold shadow mt-4" style="font-size: 1.5rem;" onclick="spinCoupon()"><i class="bi bi-stars"></i> สุ่มเลย!</button>
         </div>
     </section>
 
@@ -1136,12 +1507,16 @@
     </section>
 
     <section id="page-reasons" class="section-page">
-        <div class="d-flex flex-column justify-content-center align-items-center h-100 text-center">
-            <div class="glass-card p-5" onclick="randReason()">
-                <i class="bi bi-heart-fill text-danger display-1 mb-3"></i>
-                <h3 class="fw-bold">เหตุผลที่รักน้องหยก</h3>
-                <h4 id="reason-txt" class="text-primary mt-4 fw-bold">...</h4>
-            </div>
+        <div class="d-flex flex-column justify-content-center align-items-center h-100">
+            <h3 class="fw-bold text-white mb-3" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">🃏 Reasons Why I Love You</h3>
+            <p class="text-white-50 mb-4">แตะที่การ์ดเพื่อดูใบต่อไป -></p>
+            
+            <div class="stack-container" id="card-stack">
+                </div>
+            
+            <button class="btn btn-sm btn-light rounded-pill mt-4 px-4 text-primary" onclick="initCardStack()">
+                <i class="bi bi-arrow-counterclockwise"></i> เริ่มใหม่
+            </button>
         </div>
     </section>
 
@@ -1175,12 +1550,43 @@
     </section>
 
     <section id="page-memories" class="section-page">
-        <div class="d-flex flex-column justify-content-center align-items-center h-100 text-center">
-            <div class="glass-card p-4" style="max-width: 85%;" onclick="randMemory()">
-                <i class="bi bi-stars text-warning fs-1 mb-3"></i>
-                <h3 class="fw-bold mb-3">กล่องความทรงจำ 💭</h3>
-                <h5 id="memo-txt" class="text-primary mt-4 fw-bold" style="font-family: 'Mali', cursive;">"กดสิ... อยากเล่าอะไรให้ฟัง"</h5>
+        <div class="d-flex flex-column justify-content-center align-items-center h-100 position-relative">
+            
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">✨ Magic Gachapon</h2>
+                <p class="text-white-50 small">หมุนเพื่อรับความในใจจากพี่</p>
             </div>
+
+            <div class="gacha-machine" id="gacha-machine">
+                <div class="gacha-glass" id="gacha-glass">
+                    <div class="inner-ball" style="background:#ff758c; top:60%; left:20%;"></div>
+                    <div class="inner-ball" style="background:#ffc3cf; top:50%; left:50%;"></div>
+                    <div class="inner-ball" style="background:#a8e6cf; top:70%; left:60%;"></div>
+                    <div class="inner-ball" style="background:#fadd96; top:40%; left:30%;"></div>
+                    <div class="inner-ball" style="background:#b39ddb; top:30%; left:60%;"></div>
+                    <div class="inner-ball" style="background:#81d4fa; top:55%; left:10%;"></div>
+                </div>
+                
+                <div class="gacha-controls">
+                    <div class="gacha-knob" id="gacha-knob" onclick="playGachaV2()"></div>
+                </div>
+                
+                <div class="gacha-exit">
+                    <div id="dropped-ball" class="dropped-ball" onclick="openBallV2()">?</div>
+                </div>
+            </div>
+
+            <div id="memory-popup" class="memory-card-popup">
+                <div class="mb-3">
+                    <i class="bi bi-stars text-warning fs-1"></i>
+                </div>
+                <h5 class="fw-bold text-primary mb-3">New Memory Unlocked!</h5>
+                <div class="p-3 bg-light rounded border border-white shadow-sm mb-3">
+                    <p id="gacha-msg" class="mb-0 text-dark" style="font-family: 'Mali', cursive; font-size: 1.1rem; line-height: 1.6;">...</p>
+                </div>
+                <button class="btn btn-main rounded-pill px-4 w-100" onclick="closePopupV2()">เก็บใส่ใจ ❤️</button>
+            </div>
+
         </div>
     </section>
 
@@ -1203,15 +1609,29 @@
                 { q: "พี่รักหยกมากแค่ไหน?", options: ["น้อยมาก", "นิดนึง", "รักอยู่", "ที่สุดในโลกกกกกกก"], ans: 3 }
             ],
             coupons: ["ไปขอนแก่น 1 วัน 🚗", "ตามใจ 1 วัน 👑", "เลี้ยงข้าว 1 มื้อ 🍲", "ห้ามงอน 1 ครั้ง 🥺", "จุ๊บ 100 ที 😘","ฟรีค่าชานมไข่มุก 1 แก้ว 🧋","ให้กัด 1 ที 👄"],
-            reasons: ["เพราะหยกคือรอยยิ้มของพี่ ทำให้พี่ยิ้มได้ตลอดเลยย", "เพราะเธอเลี้ยงอาหารเก่งงง ขุนพี่เกิ้นนน", "เพราะหยกคอยรับฟังพี่เสมอๆ น่ารักจริงๆ", "เพราะเธอเป็นตัวของตัวเองได้น่ารักมาก", "เพราะหยก"],
+            reasons: [
+                { text: "เพราะหยกคือรอยยิ้มของพี่ ทำให้พี่ยิ้มได้ตลอดเลยย", emoji: "🥰" },
+                { text: "เพราะเธอเลี้ยงอาหารเก่งงง ขุนพี่เกิ้นนน", emoji: "🍜" },
+                { text: "เพราะหยกคอยรับฟังพี่เสมอๆ น่ารักจริงๆ", emoji: "👂" },
+                { text: "เพราะเธอเป็นตัวของตัวเองได้น่ารักมาก", emoji: "✨" },
+                { text: "เพราะเวลาหยกงอแงก็น่าเอ็นดู (นิดนึง)", emoji: "🥺" },
+                { text: "เพราะหยกเก่ง ขยัน ตั้งใจทำงาน", emoji: "💪" },
+                { text: "เพราะอยู่กับหยกแล้วสบายใจที่สุดในโลก", emoji: "🏡" },
+                { text: "เพราะหยกชอบแมวเหมือนพี่ (ทาสแมว)", emoji: "🐱" }
+                // เพิ่มไปได้เรื่อยๆ เลยครับ
+            ],
             dates: ["ดูหนังรอบดึก 🍿", "ไปกินตี๋น้อย 🌳", "กินบุฟเฟต์จุกๆ 🥩", "ขับรถเล่นดูวิว 🚗", "ทำอาหารกินกันเอง 🍳","ไปขอนแก่นกันนน","ไปกรุงเทพกันนน"],
             memories: [
                 "จำวันแรกที่เราเจอหน้าคุยกันได้มั้ย ตอนนั้นเขินมากเลยนะ ไม่คิดว่าหยกจะมากอดพี่ ยังคงอยู่ในใจซีนนั้น ชอบๆ",
                 "เดทแรกที่ไปเที่ยวด้วยกัน เธอแต่งตัวน่ารักมาก จนพี่ไม่กล้ามองหน้าเลย น่ารักจริงๆ",
                 "ทุกครั้งที่ตื่นมาแล้วรู้ว่ามีหยกในสาย คือความทรงจำที่ดีที่สุดในทุกๆ วันของพี่เลย",
-                "และทุกครั้งก่อนนอนมีหยกอยู่ด้วย พี่หลับฝันดีทุกคืนเล้ยยย",
+                "ทุกครั้งก่อนนอนมีหยกอยู่ด้วย พี่หลับฝันดีทุกคืนเล้ยยย",
                 "ชอบบู้บี้แมว แกล้งแมว ถ่ายรูปขำๆ5555",
-                "และทุกครั้งก่อนนอนมีหยกอยู่ด้วย พี่หลับฝันดีทุกคืนเล้ยยย",
+                "เทส1",
+                "เทส2",
+                "เทส3",
+                "เทส4",
+                "เทส5",
             ]
         };
         // ฟังก์ชันสร้างหัวใจลอย
@@ -1302,6 +1722,7 @@
             if(pageId === 'page-reveal') {
                 setTimeout(initScratch, 0); // รอ animation เฟดหน้านิดนึง
             }
+            if(pageId === 'page-reasons') initCardStack();
             
             // ... (โค้ดเดิมส่วนเพลง) ...
         }
@@ -1434,6 +1855,256 @@
             // Event Listeners
             canvas.addEventListener('mousemove', (e) => { if(e.buttons === 1) scratch(e); });
             canvas.addEventListener('touchmove', scratch);
+        }
+                /* --- Logic สำหรับหน้าคูปอง (Slot Machine) --- */
+        /* --- Logic สำหรับหน้าคูปอง (Slot Machine) ฉบับแก้ไข Infinite Loop --- */
+        function spinSlotMachine() {
+            const handle = document.getElementById('slot-handle');
+            const reel = document.getElementById('slot-reel');
+            const resultDiv = document.getElementById('slot-result');
+            const resultText = document.getElementById('slot-result-text');
+
+            // ป้องกันกดซ้ำ
+            if (handle.parentElement.classList.contains('slot-active')) return;
+
+            playSound();
+
+            // 1. เอฟเฟคโยกคันโยก
+            handle.parentElement.classList.add('slot-active');
+            setTimeout(() => handle.parentElement.classList.remove('slot-active'), 500);
+
+            // 2. ซ่อนผลลัพธ์เก่า
+            resultDiv.classList.add('d-none');
+
+            // 3. สร้างรายการยาวๆ (80 รอบ) เพื่อให้ดูเหมือนหมุนไม่จบสิ้น
+            let itemsHTML = '';
+            const spinCount = 2000; // 🔥 เพิ่มจำนวนตรงนี้ให้เยอะๆ ข้อความจะได้ไม่หมดกลางทาง
+            
+            for(let i=0; i < spinCount; i++) {
+                // สุ่มข้อความจากรายการคูปองที่มี
+                const randomText = CONFIG.coupons[Math.floor(Math.random() * CONFIG.coupons.length)];
+                // ใส่ style inline กันเหนียว เผื่อ CSS ไม่ทำงาน
+                itemsHTML += `<div class="slot-item" style="height: 120px;">🎰<br>${randomText}</div>`;
+            }
+
+            // 4. ใส่รางวัลจริงไว้ตัวสุดท้าย (ตัวที่ 81)
+            const prize = CONFIG.coupons[Math.floor(Math.random() * CONFIG.coupons.length)];
+            itemsHTML += `<div class="slot-item" style="height: 120px;">🎁<br>${prize}</div>`;
+            
+            // อัปเดต HTML
+            reel.innerHTML = itemsHTML;
+
+            // 5. รีเซ็ตตำแหน่งไปที่ 0
+            reel.style.transition = 'none';
+            reel.style.transform = 'translateY(0)';
+
+            // 6. เริ่มหมุน!
+            setTimeout(() => {
+                const itemHeight = 120; // ความสูงต่อหนึ่งช่อง
+                // คำนวณระยะทาง = (จำนวนตัวหลอก * ความสูง)
+                const totalDistance = spinCount * itemHeight; 
+                
+                // หมุนนาน 4 วินาที (ปรับเวลาได้ตรงนี้ 4s)
+                reel.style.transition = 'transform 4s cubic-bezier(0.25, 1, 0.5, 1)';
+                reel.style.transform = `translateY(-${totalDistance}px)`; 
+            }, 50);
+
+            // 7. แสดงผลเมื่อหมุนเสร็จ (ต้องรอ 4 วินาทีเท่ากับ transition)
+            setTimeout(() => {
+                playSound(); 
+                resultText.innerText = prize;
+                resultDiv.classList.remove('d-none');
+                
+                // เอฟเฟคเด้ง
+                const card = resultDiv.querySelector('.glass-card');
+                if(card) {
+                    card.style.animation = 'none';
+                    card.offsetHeight; 
+                    card.style.animation = 'pop 0.5s ease';
+                }
+            }, 4000);
+        }
+
+        /* --- Logic สำหรับหน้าเหตุผล (Card Stack) --- */
+        // เรียกฟังก์ชันนี้ตอนเข้าหน้า page-reasons (ใส่ใน goToPage)
+        /* --- Logic สำหรับหน้าเหตุผล (Card Stack V2) --- */
+        /* --- Logic สำหรับหน้าเหตุผล (Card Stack V3 - Infinite Loop) --- */
+        function initCardStack() {
+            const container = document.getElementById('card-stack');
+            container.innerHTML = '';
+            
+            // ตรวจสอบข้อมูล
+            if (CONFIG.reasons.length > 0 && typeof CONFIG.reasons[0] === 'string') {
+                container.innerHTML = '<p class="text-white bg-danger p-2 rounded">กรุณาแก้ข้อมูล CONFIG.reasons เป็น {text, emoji} ก่อนนะครับ</p>';
+                return;
+            }
+
+            const totalCards = CONFIG.reasons.length;
+            
+            // 🔥 ตัวแปรสำคัญ: เก็บค่า z-index ต่ำสุดเอาไว้
+            // เริ่มต้นที่ 0 พอมีการ์ดถูกกด เราจะลดค่านี้ลงเรื่อยๆ (-1, -2, -3...) 
+            // เพื่อให้การ์ดใบนั้นไปอยู่ "ล่างสุด" จริงๆ
+            let currentMinZIndex = 0; 
+
+            // สร้างการ์ด (เรียงจากล่างขึ้นบน เพื่อให้ใบแรกอยู่ Index สูงสุด)
+            // ตัวอย่าง: มี 3 ใบ [ใบ3, ใบ2, ใบ1]
+            // ใบ3: z=0, ใบ2: z=1, ใบ1: z=2 (อยู่บนสุด)
+            [...CONFIG.reasons].reverse().forEach((reasonData, index) => {
+                const card = document.createElement('div');
+                card.className = 'love-card';
+                
+                // สุ่มเอียงนิดๆ
+                const baseRotate = (Math.random() * 8 - 4).toFixed(2) + 'deg';
+                card.style.setProperty('--base-rotate', baseRotate);
+                card.style.transform = `rotate(${baseRotate}) scale(1)`;
+                
+                // กำหนด z-index เริ่มต้น
+                card.style.zIndex = index; 
+
+                // คำนวณเลขข้อ
+                const reasonNumber = totalCards - index;
+                
+                // ใส่ Hint ทุกใบไปเลย จะได้รู้ว่ากดได้ตลอด
+                card.innerHTML = `
+                    <div class="reason-badge">#${reasonNumber}</div>
+                    <div class="reason-emoji">${reasonData.emoji}</div>
+                    <p class="reason-text">"${reasonData.text}"</p>
+                    <small class="reason-hint">แตะเพื่อดูใบต่อไป -></small>
+                `;
+                
+                // Event คลิกการ์ด
+                card.onclick = () => {
+                    if(card.classList.contains('anim-flying')) return;
+                    
+                    playSound();
+                    card.classList.add('anim-flying');
+                    card.classList.add('card-shake');
+                    
+                    setTimeout(() => {
+                        card.classList.remove('card-shake');
+                        
+                        // สุ่มท่าบิน
+                        const anims = ['anim-fly-tr', 'anim-fly-bl', 'anim-fly-up', 'anim-fly-down'];
+                        const randomAnim = anims[Math.floor(Math.random() * anims.length)];
+                        card.classList.add(randomAnim);
+
+                        setTimeout(() => {
+                            // 🔥 จุดเปลี่ยนสำคัญ:
+                            // ลดค่า minZIndex ลง 1 แล้วยัดใส่การ์ดใบนี้
+                            // ทำให้มันมีค่าต่ำกว่าทุกใบในกองแน่นอน (เช่น -1, -2, -3 ไปเรื่อยๆ)
+                            currentMinZIndex--;
+                            card.style.zIndex = currentMinZIndex;
+                            
+                            // ลบ Class Animation ออก
+                            card.classList.remove('anim-flying', ...anims);
+                            
+                            // รีเซ็ตตำแหน่งกลับมาที่เดิม (แต่ตอนนี้อยู่ล่างสุดแล้ว)
+                            card.style.transform = `rotate(${baseRotate}) scale(0.92)`; // ย่อลงนิดนึงตอนไปต่อท้าย
+                            
+                            // ย้าย DOM ไปไว้ตัวแรก (Option เสริม)
+                            container.prepend(card); 
+                            
+                            // คืนค่าขนาดปกติ
+                            setTimeout(() => { 
+                                card.style.transform = `rotate(${baseRotate}) scale(1)`; 
+                            }, 100);
+
+                        }, 800); 
+
+                    }, 400); 
+                };
+                
+                container.appendChild(card);
+            });
+        }
+
+        /* --- Gachapon V2 Logic --- */
+        let isGachaSpinning = false;
+
+        function playGachaV2() {
+            if(isGachaSpinning) return; // ป้องกันกดรัว
+            isGachaSpinning = true;
+            playSound();
+
+            const machine = document.getElementById('gacha-machine');
+            const knob = document.getElementById('gacha-knob');
+            const glass = document.getElementById('gacha-glass');
+            const droppedBall = document.getElementById('dropped-ball');
+            const popup = document.getElementById('memory-popup');
+
+            // 1. รีเซ็ตค่าเก่า
+            popup.classList.remove('show');
+            droppedBall.classList.remove('ball-bounce');
+            droppedBall.style.opacity = '0';
+            droppedBall.style.top = '-80px'; // กลับไปซ่อนข้างบน
+
+            // 2. เริ่มอนิเมชั่น: หมุนลูกบิด + เครื่องสั่น + บอลข้างในวิ่ง
+            knob.style.transform = 'rotate(360deg)';
+            machine.classList.add('gacha-shaking');
+            glass.classList.add('balls-mixing');
+
+            // 3. หยุดสั่นและปล่อยบอล (หลังจาก 1 วินาที)
+            setTimeout(() => {
+                machine.classList.remove('gacha-shaking');
+                glass.classList.remove('balls-mixing');
+                knob.style.transform = 'rotate(0deg)'; // คืนค่าลูกบิด
+                
+                // สุ่มสีลูกบอลที่ตกลงมา
+                const colors = ['#ff758c', '#ffc3cf', '#a8e6cf', '#fadd96', '#b39ddb', '#81d4fa'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                droppedBall.style.background = randomColor;
+                droppedBall.innerHTML = '<i class="bi bi-gift-fill"></i>';
+                
+                // บอลตกลงมาเด้งดึ๋ง
+                droppedBall.classList.add('ball-bounce');
+                playSound(); // เสียงบอลตก (ถ้ามี)
+                
+                isGachaSpinning = false; // จบการทำงาน พร้อมให้กดบอล
+            }, 1000);
+        }
+
+        function openBallV2() {
+            const droppedBall = document.getElementById('dropped-ball');
+            
+            // ต้องรอให้บอลตกมาก่อนถึงกดได้
+            if(!droppedBall.classList.contains('ball-bounce')) return;
+
+            playSound();
+            createConfetti(); // เรียกเอฟเฟคพลุกระดาษ
+
+            // สุ่มข้อความ
+            const msg = CONFIG.memories[Math.floor(Math.random() * CONFIG.memories.length)];
+            document.getElementById('gacha-msg').innerText = msg;
+            
+            // โชว์การ์ด popup
+            document.getElementById('memory-popup').classList.add('show');
+            
+            // ซ่อนลูกบอลที่พื้น
+            droppedBall.style.opacity = '0';
+            droppedBall.classList.remove('ball-bounce');
+        }
+
+        function closePopupV2() {
+            document.getElementById('memory-popup').classList.remove('show');
+        }
+
+        // ฟังก์ชันสร้างพลุกระดาษ (Confetti)
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const container = document.getElementById('page-memories');
+            
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 1 + 1) + 's'; // ตกเร็วช้าต่างกัน
+                
+                container.appendChild(confetti);
+                
+                // ลบทิ้งเมื่อตกเสร็จ
+                setTimeout(() => confetti.remove(), 2000);
+            }
         }
     </script>
 </body>
