@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Valentine's Day</title>
@@ -596,6 +597,10 @@
                 <div class="menu-item" onclick="playSound(); goToPage('page-reasons')"><i class="bi bi-heart-fill"></i><span>เหตุผล</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-date')"><i class="bi bi-gift-fill"></i><span>GIFT</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-memories')"><i class="bi bi-journal-bookmark-fill"></i><span>ความทรงจำดีๆ</span></div>
+                <div class="menu-item" onclick="playSound(); goToPage('page-universe')">
+                    <i class="bi bi-globe-americas" style="color: #4facfe;"></i>
+                    <span>My Universe</span>
+                </div>
             </div>
         </div>
     </section>
@@ -1590,6 +1595,13 @@
 
         </div>
     </section>
+    <section id="page-universe" class="section-page p-0 overflow-hidden" style="background: #000;">
+        <div id="universe-container" style="width: 100vw; height: 100vh; position: relative;">
+            <div style="position: absolute; bottom: 30px; left: 0; width: 100%; text-align: center; z-index: 10; pointer-events: none;">
+                <p class="text-white-50" style="font-family: 'Mali', cursive;">โลกทั้งใบของพี่คือหยกนะ 🌎💫</p>
+            </div>
+        </div>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -1707,11 +1719,17 @@
             // ... (โค้ดเดิมส่วน remove active-section) ...
             document.querySelectorAll('.section-page').forEach(el => el.classList.remove('active-section'));
             document.getElementById(pageId).classList.add('active-section');
+            document.querySelectorAll('.section-page').forEach(el => el.classList.remove('active-section'));
+            document.getElementById(pageId).classList.add('active-section');
             window.scrollTo(0, 0);
 
             const backBtn = document.getElementById('backBtn');
             // --- แก้ตรงนี้: เพิ่ม 'page-reveal' เข้าไปในรายการซ่อนปุ่ม Back ---
             if(['page-landing', 'page-passcode', 'page-menu', 'page-reveal'].includes(pageId)) backBtn.classList.add('hidden');
+            else backBtn.classList.remove('hidden');
+            // ... (โค้ดจัดการปุ่ม Back เดิม) ...
+            // เพิ่ม page-universe ในรายการซ่อนปุ่ม Back (หรือจะให้โชว์ก็ได้ตามใจชอบ)
+            if(['page-landing', 'page-passcode', 'page-menu', 'page-reveal', 'page-universe'].includes(pageId)) backBtn.classList.add('hidden');
             else backBtn.classList.remove('hidden');
 
             // ... (โค้ดเดิมส่วนอื่นๆ) ...
@@ -1724,7 +1742,15 @@
                 setTimeout(initScratch, 0); // รอ animation เฟดหน้านิดนึง
             }
             if(pageId === 'page-reasons') initCardStack();
-            
+            // --- เพิ่มตรงนี้ ---
+            if(pageId === 'page-universe') {
+                // โชว์ปุ่ม Back แบบพิเศษ หรือ ใช้ปุ่ม Back เดิมก็ได้
+                // ในที่นี้ผมจะบังคับโชว์ปุ่ม Back เดิมเพื่อให้กดกลับได้
+                backBtn.classList.remove('hidden'); 
+                
+                // เรียกฟังก์ชันเริ่ม 3D
+                setTimeout(startUniverseScene, 100);
+            }
             // ... (โค้ดเดิมส่วนเพลง) ...
         }
 
@@ -2119,6 +2145,186 @@
                 setTimeout(() => confetti.remove(), 2000);
             }
         }
+        /* --- Universe 3D Logic (แก้ไขล่าสุด: Fallback + Super Slow Zoom) --- */
+        let universeInitialized = false;
+        let camera, scene, renderer;
+        let earthMesh, cloudGroup;
+        let isZoomingOut = false;
+
+        // --- ตั้งค่าจำนวนรูปที่มีจริง ---
+        // แก้เลข 128 เป็นเลขไฟล์รูปสุดท้ายที่คุณมี (เช่น ถ้ามีถึง pic50 ให้ใส่ 50)
+        const MAX_FILE_INDEX = 128; 
+
+        // ไฟล์วิดีโอที่จะข้าม
+        const videoIndices = [0, 1, 2, 4, 10, 17, 22, 31, 37, 77, 80];
+
+        function initUniverse() {
+            if (universeInitialized) return;
+            
+            const container = document.getElementById('universe-container');
+            
+            // 1. Setup Scene
+            scene = new THREE.Scene();
+            // ลดความหนาหมอกลงเพื่อให้เห็นดาวชัดขึ้น
+            scene.fog = new THREE.FogExp2(0x000000, 0.015);
+
+            // 2. Setup Camera
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            // 3. Setup Renderer
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // 4. สร้างโลก (Earth)
+            const earthGeo = new THREE.SphereGeometry(2, 64, 64);
+            const earthMat = new THREE.MeshPhongMaterial({ 
+                color: 0x2233ff, 
+                emissive: 0x112244,
+                specular: 0x111111,
+                shininess: 15
+            });
+            earthMesh = new THREE.Mesh(earthGeo, earthMat);
+            scene.add(earthMesh);
+
+            // เส้นโครงร่างโลก
+            const wireframeGeo = new THREE.WireframeGeometry(earthGeo);
+            const wireframeMat = new THREE.LineBasicMaterial({ color: 0x4facfe, transparent: true, opacity: 0.15 });
+            const wireframe = new THREE.LineSegments(wireframeGeo, wireframeMat);
+            earthMesh.add(wireframe);
+
+            // 5. แสงสว่าง
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 1.2);
+            pointLight.position.set(15, 15, 15);
+            scene.add(pointLight);
+
+            // 6. สร้างกลุ่มรูปภาพลอย
+            cloudGroup = new THREE.Group();
+            scene.add(cloudGroup);
+
+            const textureLoader = new THREE.TextureLoader();
+            const itemsToSpawn = 50; // จำนวนแผ่นที่จะลอย
+
+            for (let i = 0; i < itemsToSpawn; i++) {
+                // สุ่มเลขไฟล์
+                let randIndex = Math.floor(Math.random() * MAX_FILE_INDEX);
+                console.log(randIndex);
+                while (videoIndices.includes(randIndex)) {
+                    randIndex = Math.floor(Math.random() * MAX_FILE_INDEX);
+                }
+
+                const imgPath = `images/pic${randIndex}.jpg`; 
+
+                // ฟังก์ชันสร้างแผ่น (ใช้ซ้ำได้)
+                const createPlane = (mat, isError = false) => {
+                    // ถ้าเป็น Error (แผ่นชมพู) ให้เล็กหน่อย ถ้าเป็นรูปจริงให้ใหญ่หน่อย
+                    const w = isError ? 0.8 : 1.2;
+                    const h = isError ? 0.8 : (mat.map ? (w * mat.map.image.height / mat.map.image.width) : 1.2);
+                    
+                    const geometry = new THREE.PlaneGeometry(w, h || w);
+                    const plane = new THREE.Mesh(geometry, mat);
+
+                    // สุ่มตำแหน่งกระจายตัว
+                    const dist = 5 + Math.random() * 6; // ระยะห่าง 5-11
+                    const theta = Math.random() * Math.PI * 2;
+                    const phi = Math.acos((Math.random() * 2) - 1);
+
+                    plane.position.x = dist * Math.sin(phi) * Math.cos(theta);
+                    plane.position.y = dist * Math.sin(phi) * Math.sin(theta);
+                    plane.position.z = dist * Math.cos(phi);
+
+                    plane.lookAt(0, 0, 0); 
+                    cloudGroup.add(plane);
+                };
+
+                // โหลดรูป
+                textureLoader.load(
+                    imgPath,
+                    (texture) => {
+                        // โหลดสำเร็จ: สร้างแผ่นรูปภาพ
+                        const material = new THREE.MeshBasicMaterial({ 
+                            map: texture, 
+                            side: THREE.DoubleSide, 
+                            transparent: true,
+                            opacity: 0.95
+                        });
+                        createPlane(material);
+                    },
+                    undefined,
+                    (err) => {
+                        // โหลดไม่สำเร็จ: สร้างแผ่นสีชมพูแทน (Fallback)
+                        // จะได้รู้ว่าโค้ดทำงาน แต่รูปไม่มาเฉยๆ
+                        const material = new THREE.MeshBasicMaterial({ 
+                            color: 0xff69b4, // สีชมพู Hot Pink
+                            side: THREE.DoubleSide,
+                            transparent: true,
+                            opacity: 0.7
+                        });
+                        createPlane(material, true);
+                    }
+                );
+            }
+
+            // สร้างดาว (เพิ่มจำนวนดาวให้ดูสวยขึ้น)
+            const starGeo = new THREE.BufferGeometry();
+            const starCount = 2000;
+            const posArray = new Float32Array(starCount * 3);
+            for(let i=0; i<starCount*3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 80; 
+            }
+            starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const starMat = new THREE.PointsMaterial({size: 0.07, color: 0xffffff, transparent: true, opacity: 0.8});
+            const stars = new THREE.Points(starGeo, starMat);
+            scene.add(stars);
+
+            universeInitialized = true;
+            animateUniverse();
+        }
+
+        function animateUniverse() {
+            requestAnimationFrame(animateUniverse);
+
+            if(earthMesh) earthMesh.rotation.y += 0.0015; // หมุนโลกช้าๆ
+
+            if(cloudGroup) {
+                cloudGroup.rotation.y -= 0.0008; // รูปหมุนสวนทาง ช้ามากๆ
+                cloudGroup.rotation.x += 0.0003;
+            }
+
+            // --- ซูมออกช้าแบบ Cinematic ---
+            if (isZoomingOut) {
+                const targetZ = 16; 
+                
+                // ใช้ 0.0008 คือช้ามากๆๆๆ (เกือบหยุดนิ่งแต่ขยับ)
+                // ถ้าอยากให้ช้ากว่านี้ลดเลขลงอีกครับ
+                camera.position.z += (targetZ - camera.position.z) * 0.001; 
+
+                if (Math.abs(targetZ - camera.position.z) < 0.1) {
+                    isZoomingOut = false;
+                }
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function startUniverseScene() {
+            initUniverse();
+            // เริ่มต้นใกล้ๆ
+            camera.position.set(0, 0, 4); 
+            camera.rotation.set(0, 0, 0);
+            isZoomingOut = true;
+        }
+
+        window.addEventListener('resize', () => {
+            if(camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        });
     </script>
 </body>
 </html>
