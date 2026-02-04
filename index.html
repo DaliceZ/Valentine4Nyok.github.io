@@ -1632,7 +1632,7 @@
                 "เทส2",
                 "เทส3",
                 "เทส4",
-                "เทส5",
+                "เทส",
             ]
         };
         // ฟังก์ชันสร้างหัวใจลอย
@@ -1937,6 +1937,100 @@
                 }
             }, 4000);
         }
+
+        /* --- Logic สำหรับหน้าเหตุผล (Card Stack) --- */
+        // เรียกฟังก์ชันนี้ตอนเข้าหน้า page-reasons (ใส่ใน goToPage)
+        /* --- Logic สำหรับหน้าเหตุผล (Card Stack V2) --- */
+        /* --- Logic สำหรับหน้าเหตุผล (Card Stack V3 - Infinite Loop) --- */
+        function initCardStack() {
+            const container = document.getElementById('card-stack');
+            container.innerHTML = '';
+            
+            // ตรวจสอบข้อมูล
+            if (CONFIG.reasons.length > 0 && typeof CONFIG.reasons[0] === 'string') {
+                container.innerHTML = '<p class="text-white bg-danger p-2 rounded">กรุณาแก้ข้อมูล CONFIG.reasons เป็น {text, emoji} ก่อนนะครับ</p>';
+                return;
+            }
+
+            const totalCards = CONFIG.reasons.length;
+            
+            // 🔥 ตัวแปรสำคัญ: เก็บค่า z-index ต่ำสุดเอาไว้
+            // เริ่มต้นที่ 0 พอมีการ์ดถูกกด เราจะลดค่านี้ลงเรื่อยๆ (-1, -2, -3...) 
+            // เพื่อให้การ์ดใบนั้นไปอยู่ "ล่างสุด" จริงๆ
+            let currentMinZIndex = 0; 
+
+            // สร้างการ์ด (เรียงจากล่างขึ้นบน เพื่อให้ใบแรกอยู่ Index สูงสุด)
+            // ตัวอย่าง: มี 3 ใบ [ใบ3, ใบ2, ใบ1]
+            // ใบ3: z=0, ใบ2: z=1, ใบ1: z=2 (อยู่บนสุด)
+            [...CONFIG.reasons].reverse().forEach((reasonData, index) => {
+                const card = document.createElement('div');
+                card.className = 'love-card';
+                
+                // สุ่มเอียงนิดๆ
+                const baseRotate = (Math.random() * 8 - 4).toFixed(2) + 'deg';
+                card.style.setProperty('--base-rotate', baseRotate);
+                card.style.transform = `rotate(${baseRotate}) scale(1)`;
+                
+                // กำหนด z-index เริ่มต้น
+                card.style.zIndex = index; 
+
+                // คำนวณเลขข้อ
+                const reasonNumber = totalCards - index;
+                
+                // ใส่ Hint ทุกใบไปเลย จะได้รู้ว่ากดได้ตลอด
+                card.innerHTML = `
+                    <div class="reason-badge">#${reasonNumber}</div>
+                    <div class="reason-emoji">${reasonData.emoji}</div>
+                    <p class="reason-text">"${reasonData.text}"</p>
+                    <small class="reason-hint">แตะเพื่อดูใบต่อไป -></small>
+                `;
+                
+                // Event คลิกการ์ด
+                card.onclick = () => {
+                    if(card.classList.contains('anim-flying')) return;
+                    
+                    playSound();
+                    card.classList.add('anim-flying');
+                    card.classList.add('card-shake');
+                    
+                    setTimeout(() => {
+                        card.classList.remove('card-shake');
+                        
+                        // สุ่มท่าบิน
+                        const anims = ['anim-fly-tr', 'anim-fly-bl', 'anim-fly-up', 'anim-fly-down'];
+                        const randomAnim = anims[Math.floor(Math.random() * anims.length)];
+                        card.classList.add(randomAnim);
+
+                        setTimeout(() => {
+                            // 🔥 จุดเปลี่ยนสำคัญ:
+                            // ลดค่า minZIndex ลง 1 แล้วยัดใส่การ์ดใบนี้
+                            // ทำให้มันมีค่าต่ำกว่าทุกใบในกองแน่นอน (เช่น -1, -2, -3 ไปเรื่อยๆ)
+                            currentMinZIndex--;
+                            card.style.zIndex = currentMinZIndex;
+                            
+                            // ลบ Class Animation ออก
+                            card.classList.remove('anim-flying', ...anims);
+                            
+                            // รีเซ็ตตำแหน่งกลับมาที่เดิม (แต่ตอนนี้อยู่ล่างสุดแล้ว)
+                            card.style.transform = `rotate(${baseRotate}) scale(0.92)`; // ย่อลงนิดนึงตอนไปต่อท้าย
+                            
+                            // ย้าย DOM ไปไว้ตัวแรก (Option เสริม)
+                            container.prepend(card); 
+                            
+                            // คืนค่าขนาดปกติ
+                            setTimeout(() => { 
+                                card.style.transform = `rotate(${baseRotate}) scale(1)`; 
+                            }, 100);
+
+                        }, 800); 
+
+                    }, 400); 
+                };
+                
+                container.appendChild(card);
+            });
+        }
+
         /* --- Gachapon V2 Logic --- */
         let isGachaSpinning = false;
 
