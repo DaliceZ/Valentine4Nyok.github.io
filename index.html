@@ -1724,7 +1724,6 @@
             window.scrollTo(0, 0);
 
             const backBtn = document.getElementById('backBtn');
-            // --- แก้ตรงนี้: เพิ่ม 'page-reveal' เข้าไปในรายการซ่อนปุ่ม Back ---
             if(['page-landing', 'page-passcode', 'page-menu', 'page-reveal'].includes(pageId)) backBtn.classList.add('hidden');
             else backBtn.classList.remove('hidden');
             // ... (โค้ดจัดการปุ่ม Back เดิม) ...
