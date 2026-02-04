@@ -2,6 +2,8 @@
 <html lang="th">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Valentine's Day</title>
@@ -598,7 +600,7 @@
                 <div class="menu-item" onclick="playSound(); goToPage('page-date')"><i class="bi bi-gift-fill"></i><span>GIFT</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-memories')"><i class="bi bi-journal-bookmark-fill"></i><span>ความทรงจำดีๆ</span></div>
                 <div class="menu-item" onclick="playSound(); goToPage('page-universe')">
-                    <i class="bi bi-globe-americas" style="color: #4facfe;"></i>
+                    <i class="bi bi-globe-americas"></i>
                     <span>My Universe</span>
                 </div>
             </div>
@@ -2144,18 +2146,18 @@
                 setTimeout(() => confetti.remove(), 2000);
             }
         }
-        /* --- Universe 3D Logic (แก้ไขล่าสุด: Fallback + Super Slow Zoom) --- */
+
+        /* --- Universe 3D Logic (High Performance & Smooth Version) --- */
         let universeInitialized = false;
-        let camera, scene, renderer;
-        let earthMesh, cloudGroup;
+        let camera, scene, renderer, controls;
+        let heartMesh, cloudGroup, stars;
+        let clock = new THREE.Clock();
         let isZoomingOut = false;
 
-        // --- ตั้งค่าจำนวนรูปที่มีจริง ---
-        // แก้เลข 128 เป็นเลขไฟล์รูปสุดท้ายที่คุณมี (เช่น ถ้ามีถึง pic50 ให้ใส่ 50)
-        const MAX_FILE_INDEX = 128; 
-
-        // ไฟล์วิดีโอที่จะข้าม
-        const videoIndices = [0, 1, 2, 4, 10, 17, 22, 31, 37, 77, 80];
+        // --- Config (ปรับลดลงเพื่อความลื่น) ---
+        const MAX_FILE_INDEX = 349; 
+        const IMAGE_COUNT = 150;    // ลดจาก 150 เหลือ 100 ก่อน (ถ้าลื่นค่อยเพิ่ม)
+        const STAR_COUNT = 2000;    // ลดดาวลงนิดหน่อย
 
         function initUniverse() {
             if (universeInitialized) return;
@@ -2164,120 +2166,166 @@
             
             // 1. Setup Scene
             scene = new THREE.Scene();
-            // ลดความหนาหมอกลงเพื่อให้เห็นดาวชัดขึ้น
-            scene.fog = new THREE.FogExp2(0x000000, 0.015);
+            scene.background = new THREE.Color(0x050002); 
+            scene.fog = new THREE.FogExp2(0x050002, 0.002); 
 
             // 2. Setup Camera
             camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            
-            // 3. Setup Renderer
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            camera.position.set(0, 0, 6); 
+
+            // 3. Setup Renderer (ปรับจูนประสิทธิภาพ)
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); // ถ้ายังแล็ก ให้แก้ antialias: false
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // **ตัวช่วยความลื่น #1: จำกัด Pixel Ratio ไม่ให้เกิน 2**
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
+            
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.0;
+            
+            // ลดคุณภาพเงาลงนิดนึงเพื่อความลื่น
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
             container.appendChild(renderer.domElement);
 
-            // 4. สร้างโลก (Earth)
-            const earthGeo = new THREE.SphereGeometry(2, 64, 64);
-            const earthMat = new THREE.MeshPhongMaterial({ 
-                color: 0x2233ff, 
-                emissive: 0x112244,
-                specular: 0x111111,
-                shininess: 15
+            // 4. Controls
+            if(typeof THREE.OrbitControls !== 'undefined') {
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.rotateSpeed = 0.4;
+                controls.enablePan = false;
+                controls.minDistance = 6;
+                controls.maxDistance = 60;
+                controls.autoRotate = false; 
+            }
+
+            // --- 5. สร้างหัวใจ 3D (Optimized Mesh) ---
+            const x = 0, y = 0;
+            const heartShape = new THREE.Shape();
+            heartShape.moveTo( x + 5, y + 5 );
+            heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
+            heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7,x - 6, y + 7 );
+            heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
+            heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
+            heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
+            heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
+
+            // **ตัวช่วยความลื่น #2: ลดความละเอียดโมเดลลง**
+            const extrudeSettings = {
+                steps: 1,           // ลดจาก 2 เหลือ 1
+                depth: 0.1,         
+                bevelEnabled: true,
+                bevelThickness: 6,  
+                bevelSize: 4.5,     
+                bevelOffset: 0,
+                bevelSegments: 20   // ลดจาก 60 เหลือ 20 (ช่วยได้เยอะมากกก!)
+            };
+
+            const heartGeo = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+            heartGeo.center(); 
+
+            const heartMat = new THREE.MeshPhysicalMaterial({ 
+                color: 0xdc0000,        
+                emissive: 0x220000,     
+                roughness: 0.2,         // เพิ่มความด้านนิดนึงช่วยลดการคำนวณแสง
+                metalness: 0.1,         
+                clearcoat: 1.0,         
+                clearcoatRoughness: 0.1, 
+                reflectivity: 1.0,      
+                ior: 1.5,               
             });
-            earthMesh = new THREE.Mesh(earthGeo, earthMat);
-            scene.add(earthMesh);
 
-            // เส้นโครงร่างโลก
-            const wireframeGeo = new THREE.WireframeGeometry(earthGeo);
-            const wireframeMat = new THREE.LineBasicMaterial({ color: 0x4facfe, transparent: true, opacity: 0.15 });
-            const wireframe = new THREE.LineSegments(wireframeGeo, wireframeMat);
-            earthMesh.add(wireframe);
+            heartMesh = new THREE.Mesh(heartGeo, heartMat);
+            heartMesh.rotation.x = Math.PI; 
+            heartMesh.rotation.z = 0.05;
+            heartMesh.scale.set(0.3, 0.3, 0.3); 
+            heartMesh.castShadow = true; 
+            heartMesh.receiveShadow = true;
+            scene.add(heartMesh);
 
-            // 5. แสงสว่าง
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+
+            // --- 6. จัดแสง ---
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
             scene.add(ambientLight);
-            const pointLight = new THREE.PointLight(0xffffff, 1.2);
-            pointLight.position.set(15, 15, 15);
-            scene.add(pointLight);
+            
+            const keyLight = new THREE.SpotLight(0xffffff, 2);
+            keyLight.position.set(20, 20, 30);
+            keyLight.angle = 0.3;
+            keyLight.penumbra = 0.5;
+            keyLight.castShadow = true;
+            // ลดความละเอียดเงาลง (512x512 ก็พอสำหรับมือถือ)
+            keyLight.shadow.mapSize.width = 512;
+            keyLight.shadow.mapSize.height = 512;
+            scene.add(keyLight);
 
-            // 6. สร้างกลุ่มรูปภาพลอย
+            const fillLight = new THREE.PointLight(0xff88aa, 1.5);
+            fillLight.position.set(-20, -10, 20);
+            scene.add(fillLight);
+
+            const rimLight = new THREE.SpotLight(0xccccff, 3);
+            rimLight.position.set(0, 30, -20);
+            rimLight.lookAt(0, 0, 0);
+            scene.add(rimLight);
+
+
+            // --- 7. สร้างดาว ---
+            const starGeo = new THREE.BufferGeometry();
+            const positions = [];
+            for(let i=0; i<STAR_COUNT; i++) {
+                positions.push((Math.random() - 0.5) * 600); 
+                positions.push((Math.random() - 0.5) * 600); 
+                positions.push((Math.random() - 0.5) * 600); 
+            }
+            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            const starMat = new THREE.PointsMaterial({
+                color: 0xffffff, size: 0.6, transparent: true, opacity: 0.9, sizeAttenuation: true 
+            });
+            stars = new THREE.Points(starGeo, starMat);
+            scene.add(stars);
+
+
+            // --- 8. รูปภาพลอย ---
             cloudGroup = new THREE.Group();
             scene.add(cloudGroup);
-
             const textureLoader = new THREE.TextureLoader();
-            const itemsToSpawn = 50; // จำนวนแผ่นที่จะลอย
+            
+            const spawnImage = () => {
+                const randIndex = Math.floor(Math.random() * MAX_FILE_INDEX) + 1;
+                
+                const attemptLoad = (ext) => {
+                    const imgPath = `universepic/unipic${randIndex}.${ext}`;
 
-            for (let i = 0; i < itemsToSpawn; i++) {
-                // สุ่มเลขไฟล์
-                let randIndex = Math.floor(Math.random() * MAX_FILE_INDEX);
-                console.log(randIndex);
-                while (videoIndices.includes(randIndex)) {
-                    randIndex = Math.floor(Math.random() * MAX_FILE_INDEX);
-                }
-
-                const imgPath = `images/pic${randIndex}.jpg`; 
-
-                // ฟังก์ชันสร้างแผ่น (ใช้ซ้ำได้)
-                const createPlane = (mat, isError = false) => {
-                    // ถ้าเป็น Error (แผ่นชมพู) ให้เล็กหน่อย ถ้าเป็นรูปจริงให้ใหญ่หน่อย
-                    const w = isError ? 0.8 : 1.2;
-                    const h = isError ? 0.8 : (mat.map ? (w * mat.map.image.height / mat.map.image.width) : 1.2);
-                    
-                    const geometry = new THREE.PlaneGeometry(w, h || w);
-                    const plane = new THREE.Mesh(geometry, mat);
-
-                    // สุ่มตำแหน่งกระจายตัว
-                    const dist = 5 + Math.random() * 6; // ระยะห่าง 5-11
-                    const theta = Math.random() * Math.PI * 2;
-                    const phi = Math.acos((Math.random() * 2) - 1);
-
-                    plane.position.x = dist * Math.sin(phi) * Math.cos(theta);
-                    plane.position.y = dist * Math.sin(phi) * Math.sin(theta);
-                    plane.position.z = dist * Math.cos(phi);
-
-                    plane.lookAt(0, 0, 0); 
-                    cloudGroup.add(plane);
+                    textureLoader.load(
+                        imgPath, 
+                        (texture) => {
+                            // ลดความคมชัดของ Texture ลงนิดนึงเพื่อประหยัด Ram การ์ดจอ
+                            texture.minFilter = THREE.LinearFilter;
+                            
+                            const aspect = texture.image.width / texture.image.height;
+                            const h = 1.5; const w = h * aspect;
+                            const plane = new THREE.Mesh(
+                                new THREE.PlaneGeometry(w, h),
+                                new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true, opacity: 0.9 })
+                            );
+                            const dist = 10 + Math.random() * 15; 
+                            const theta = Math.random() * Math.PI * 2;
+                            const phi = Math.acos(2 * Math.random() - 1);
+                            plane.position.setFromSphericalCoords(dist, phi, theta);
+                            plane.lookAt(0, 0, 0); 
+                            cloudGroup.add(plane);
+                        },
+                        undefined, 
+                        (err) => {
+                            if(ext === 'jpg') attemptLoad('png');
+                        }
+                    );
                 };
+                attemptLoad('jpg');
+            };
 
-                // โหลดรูป
-                textureLoader.load(
-                    imgPath,
-                    (texture) => {
-                        // โหลดสำเร็จ: สร้างแผ่นรูปภาพ
-                        const material = new THREE.MeshBasicMaterial({ 
-                            map: texture, 
-                            side: THREE.DoubleSide, 
-                            transparent: true,
-                            opacity: 0.95
-                        });
-                        createPlane(material);
-                    },
-                    undefined,
-                    (err) => {
-                        // โหลดไม่สำเร็จ: สร้างแผ่นสีชมพูแทน (Fallback)
-                        // จะได้รู้ว่าโค้ดทำงาน แต่รูปไม่มาเฉยๆ
-                        const material = new THREE.MeshBasicMaterial({ 
-                            color: 0xff69b4, // สีชมพู Hot Pink
-                            side: THREE.DoubleSide,
-                            transparent: true,
-                            opacity: 0.7
-                        });
-                        createPlane(material, true);
-                    }
-                );
-            }
-
-            // สร้างดาว (เพิ่มจำนวนดาวให้ดูสวยขึ้น)
-            const starGeo = new THREE.BufferGeometry();
-            const starCount = 2000;
-            const posArray = new Float32Array(starCount * 3);
-            for(let i=0; i<starCount*3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 80; 
-            }
-            starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const starMat = new THREE.PointsMaterial({size: 0.07, color: 0xffffff, transparent: true, opacity: 0.8});
-            const stars = new THREE.Points(starGeo, starMat);
-            scene.add(stars);
+            // เพิ่มระยะเวลา Delay การสร้างรูปให้ห่างกันหน่อย เครื่องจะได้ไม่กระตุกตอนโหลด
+            for(let i=0; i<IMAGE_COUNT; i++) setTimeout(spawnImage, i * 30); // เดิม *15 แก้เป็น *30
 
             universeInitialized = true;
             animateUniverse();
@@ -2285,23 +2333,23 @@
 
         function animateUniverse() {
             requestAnimationFrame(animateUniverse);
+            const time = clock.getElapsedTime();
 
-            if(earthMesh) earthMesh.rotation.y += 0.0015; // หมุนโลกช้าๆ
+            if(controls) controls.update();
 
-            if(cloudGroup) {
-                cloudGroup.rotation.y -= 0.0008; // รูปหมุนสวนทาง ช้ามากๆ
-                cloudGroup.rotation.x += 0.0003;
+            if(stars) stars.rotation.y += 0.0002;
+            if(cloudGroup) cloudGroup.rotation.y -= 0.0005;
+            
+            if(heartMesh) {
+                const beat = 1 + Math.sin(time * 3) * 0.03;
+                heartMesh.scale.set(0.3 * beat, 0.3 * beat, 0.3 * beat);
+                heartMesh.rotation.y += 0.002; 
             }
 
-            // --- ซูมออกช้าแบบ Cinematic ---
-            if (isZoomingOut) {
-                const targetZ = 16; 
-                
-                // ใช้ 0.0008 คือช้ามากๆๆๆ (เกือบหยุดนิ่งแต่ขยับ)
-                // ถ้าอยากให้ช้ากว่านี้ลดเลขลงอีกครับ
-                camera.position.z += (targetZ - camera.position.z) * 0.001; 
-
-                if (Math.abs(targetZ - camera.position.z) < 0.1) {
+            if (isZoomingOut && camera) {
+                const targetZ = 22; 
+                camera.position.z += (targetZ - camera.position.z) * 0.008;
+                if (Math.abs(targetZ - camera.position.z) < 0.5) {
                     isZoomingOut = false;
                 }
             }
@@ -2311,10 +2359,13 @@
 
         function startUniverseScene() {
             initUniverse();
-            // เริ่มต้นใกล้ๆ
-            camera.position.set(0, 0, 4); 
-            camera.rotation.set(0, 0, 0);
-            isZoomingOut = true;
+            if(camera && controls) {
+                camera.position.set(0, 0, 6); 
+                camera.rotation.set(0, 0, 0);
+                controls.target.set(0, 0, 0);
+                controls.update();
+                isZoomingOut = true;
+            }
         }
 
         window.addEventListener('resize', () => {
