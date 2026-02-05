@@ -2155,9 +2155,9 @@
         let isZoomingOut = false;
 
         // --- Config (ปรับลดลงเพื่อความลื่น) ---
-        const MAX_FILE_INDEX = 349; 
-        const IMAGE_COUNT = 150;    // ลดจาก 150 เหลือ 100 ก่อน (ถ้าลื่นค่อยเพิ่ม)
-        const STAR_COUNT = 2000;    // ลดดาวลงนิดหน่อย
+        const MAX_FILE_INDEX = 128; 
+        const IMAGE_COUNT = 100;    // ลดจาก 150 เหลือ 100 ก่อน (ถ้าลื่นค่อยเพิ่ม)
+        const STAR_COUNT = 4000;    // ลดดาวลงนิดหน่อย
 
         function initUniverse() {
             if (universeInitialized) return;
@@ -2294,7 +2294,7 @@
                 const randIndex = Math.floor(Math.random() * MAX_FILE_INDEX) + 1;
                 
                 const attemptLoad = (ext) => {
-                    const imgPath = `universepic/unipic${randIndex}.${ext}`;
+                    const imgPath = `images/pic${randIndex}.${ext}`;
 
                     textureLoader.load(
                         imgPath, 
